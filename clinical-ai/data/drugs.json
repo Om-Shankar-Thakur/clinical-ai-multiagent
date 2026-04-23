@@ -1,0 +1,558 @@
+[
+  {
+    "id": "DR001",
+    "name": "Fluoxetine",
+    "class": "SSRI",
+    "uses": ["depression", "anxiety"],
+    "interactions": [
+      { "drug": "MAOI", "severity": "high", "effect": "serotonin syndrome" },
+      { "drug": "Tramadol", "severity": "medium", "effect": "increased seizure risk" }
+    ],
+    "contraindications": ["severe liver disease"],
+    "dosage_range": { "min": 20, "max": 80, "unit": "mg/day" }
+  },
+  {
+    "id": "DR002",
+    "name": "Sertraline",
+    "class": "SSRI",
+    "uses": ["depression", "PTSD"],
+    "interactions": [
+      { "drug": "MAOI", "severity": "high", "effect": "serotonin syndrome" }
+    ],
+    "contraindications": ["concurrent MAOI use"],
+    "dosage_range": { "min": 50, "max": 200, "unit": "mg/day" }
+  },
+  {
+    "id": "DR003",
+    "name": "Amitriptyline",
+    "class": "Tricyclic Antidepressant",
+    "uses": ["depression", "neuropathic pain"],
+    "interactions": [
+      { "drug": "SSRIs", "severity": "medium", "effect": "QT prolongation" }
+    ],
+    "contraindications": ["recent myocardial infarction"],
+    "dosage_range": { "min": 25, "max": 150, "unit": "mg/day" }
+  },
+  {
+    "id": "DR004",
+    "name": "Venlafaxine",
+    "class": "SNRI",
+    "uses": ["depression", "anxiety"],
+    "interactions": [
+      { "drug": "Triptans", "severity": "medium", "effect": "serotonin syndrome" }
+    ],
+    "contraindications": ["uncontrolled hypertension"],
+    "dosage_range": { "min": 75, "max": 225, "unit": "mg/day" }
+  },
+  {
+    "id": "DR005",
+    "name": "Bupropion",
+    "class": "NDRI",
+    "uses": ["depression", "smoking cessation"],
+    "interactions": [
+      { "drug": "MAOI", "severity": "high", "effect": "hypertensive crisis" }
+    ],
+    "contraindications": ["seizure disorder", "eating disorders"],
+    "dosage_range": { "min": 150, "max": 450, "unit": "mg/day" }
+  },
+
+  {
+    "id": "DR006",
+    "name": "Amoxicillin",
+    "class": "Penicillin Antibiotic",
+    "uses": ["pneumonia", "sinusitis"],
+    "interactions": [
+      { "drug": "Methotrexate", "severity": "medium", "effect": "reduced methotrexate clearance" }
+    ],
+    "contraindications": ["penicillin allergy"],
+    "dosage_range": { "min": 500, "max": 3000, "unit": "mg/day" }
+  },
+  {
+    "id": "DR007",
+    "name": "Azithromycin",
+    "class": "Macrolide Antibiotic",
+    "uses": ["respiratory infections", "STIs"],
+    "interactions": [
+      { "drug": "QT prolonging drugs", "severity": "high", "effect": "arrhythmia risk" }
+    ],
+    "contraindications": ["history of QT prolongation"],
+    "dosage_range": { "min": 500, "max": 500, "unit": "mg/day" }
+  },
+  {
+    "id": "DR008",
+    "name": "Ciprofloxacin",
+    "class": "Fluoroquinolone Antibiotic",
+    "uses": ["UTI", "GI infections"],
+    "interactions": [
+      { "drug": "Tizanidine", "severity": "high", "effect": "severe hypotension" }
+    ],
+    "contraindications": ["myasthenia gravis"],
+    "dosage_range": { "min": 500, "max": 1000, "unit": "mg/day" }
+  },
+  {
+    "id": "DR009",
+    "name": "Doxycycline",
+    "class": "Tetracycline Antibiotic",
+    "uses": ["acne", "respiratory infections"],
+    "interactions": [
+      { "drug": "Antacids", "severity": "low", "effect": "reduced absorption" }
+    ],
+    "contraindications": ["pregnancy"],
+    "dosage_range": { "min": 100, "max": 200, "unit": "mg/day" }
+  },
+  {
+    "id": "DR010",
+    "name": "Ceftriaxone",
+    "class": "Cephalosporin Antibiotic",
+    "uses": ["sepsis", "pneumonia"],
+    "interactions": [],
+    "contraindications": ["neonatal hyperbilirubinemia"],
+    "dosage_range": { "min": 1000, "max": 4000, "unit": "mg/day" }
+  },
+
+  {
+    "id": "DR011",
+    "name": "Metformin",
+    "class": "Biguanide",
+    "uses": ["type 2 diabetes"],
+    "interactions": [
+      { "drug": "Contrast agents", "severity": "medium", "effect": "lactic acidosis risk" }
+    ],
+    "contraindications": ["severe renal impairment"],
+    "dosage_range": { "min": 500, "max": 2000, "unit": "mg/day" }
+  },
+  {
+    "id": "DR012",
+    "name": "Insulin Glargine",
+    "class": "Long-acting Insulin",
+    "uses": ["diabetes mellitus"],
+    "interactions": [
+      { "drug": "Beta blockers", "severity": "low", "effect": "masked hypoglycemia" }
+    ],
+    "contraindications": ["hypoglycemia"],
+    "dosage_range": { "min": 10, "max": 80, "unit": "units/day" }
+  },
+  {
+    "id": "DR013",
+    "name": "Amlodipine",
+    "class": "Calcium Channel Blocker",
+    "uses": ["hypertension", "angina"],
+    "interactions": [
+      { "drug": "Simvastatin", "severity": "medium", "effect": "increased statin levels" }
+    ],
+    "contraindications": ["severe hypotension"],
+    "dosage_range": { "min": 5, "max": 10, "unit": "mg/day" }
+  },
+  {
+    "id": "DR014",
+    "name": "Lisinopril",
+    "class": "ACE Inhibitor",
+    "uses": ["hypertension", "heart failure"],
+    "interactions": [
+      { "drug": "Potassium supplements", "severity": "high", "effect": "hyperkalemia" }
+    ],
+    "contraindications": ["pregnancy"],
+    "dosage_range": { "min": 5, "max": 40, "unit": "mg/day" }
+  },
+  {
+    "id": "DR015",
+    "name": "Losartan",
+    "class": "ARB",
+    "uses": ["hypertension", "diabetic nephropathy"],
+    "interactions": [
+      { "drug": "NSAIDs", "severity": "medium", "effect": "renal impairment" }
+    ],
+    "contraindications": ["pregnancy"],
+    "dosage_range": { "min": 25, "max": 100, "unit": "mg/day" }
+  },
+
+  {
+    "id": "DR016",
+    "name": "Atorvastatin",
+    "class": "Statin",
+    "uses": ["hyperlipidemia"],
+    "interactions": [
+      { "drug": "Macrolide antibiotics", "severity": "medium", "effect": "myopathy risk" }
+    ],
+    "contraindications": ["active liver disease"],
+    "dosage_range": { "min": 10, "max": 80, "unit": "mg/day" }
+  },
+  {
+    "id": "DR017",
+    "name": "Aspirin",
+    "class": "Antiplatelet",
+    "uses": ["cardiovascular prevention"],
+    "interactions": [
+      { "drug": "Warfarin", "severity": "high", "effect": "bleeding risk" }
+    ],
+    "contraindications": ["active bleeding"],
+    "dosage_range": { "min": 75, "max": 325, "unit": "mg/day" }
+  },
+  {
+    "id": "DR018",
+    "name": "Clopidogrel",
+    "class": "Antiplatelet",
+    "uses": ["stroke prevention"],
+    "interactions": [
+      { "drug": "Omeprazole", "severity": "medium", "effect": "reduced antiplatelet effect" }
+    ],
+    "contraindications": ["active bleeding"],
+    "dosage_range": { "min": 75, "max": 75, "unit": "mg/day" }
+  },
+  {
+    "id": "DR019",
+    "name": "Warfarin",
+    "class": "Anticoagulant",
+    "uses": ["atrial fibrillation", "DVT"],
+    "interactions": [
+      { "drug": "NSAIDs", "severity": "high", "effect": "bleeding risk" },
+      { "drug": "Antibiotics", "severity": "medium", "effect": "INR elevation" }
+    ],
+    "contraindications": ["pregnancy"],
+    "dosage_range": { "min": 2, "max": 10, "unit": "mg/day" }
+  },
+  {
+    "id": "DR020",
+    "name": "Heparin",
+    "class": "Anticoagulant",
+    "uses": ["venous thromboembolism"],
+    "interactions": [
+      { "drug": "Aspirin", "severity": "high", "effect": "bleeding risk" }
+    ],
+    "contraindications": ["heparin-induced thrombocytopenia"],
+    "dosage_range": { "min": 5000, "max": 30000, "unit": "units/day" }
+  },
+
+  {
+    "id": "DR021",
+    "name": "Paracetamol",
+    "class": "Analgesic",
+    "uses": ["pain", "fever"],
+    "interactions": [
+      { "drug": "Alcohol", "severity": "medium", "effect": "hepatotoxicity" }
+    ],
+    "contraindications": ["severe liver disease"],
+    "dosage_range": { "min": 500, "max": 4000, "unit": "mg/day" }
+  },
+  {
+    "id": "DR022",
+    "name": "Ibuprofen",
+    "class": "NSAID",
+    "uses": ["pain", "inflammation"],
+    "interactions": [
+      { "drug": "ACE inhibitors", "severity": "medium", "effect": "renal impairment" }
+    ],
+    "contraindications": ["peptic ulcer disease"],
+    "dosage_range": { "min": 400, "max": 2400, "unit": "mg/day" }
+  },
+  {
+    "id": "DR023",
+    "name": "Omeprazole",
+    "class": "Proton Pump Inhibitor",
+    "uses": ["GERD", "peptic ulcer"],
+    "interactions": [
+      { "drug": "Clopidogrel", "severity": "medium", "effect": "reduced antiplatelet activity" }
+    ],
+    "contraindications": ["hypersensitivity"],
+    "dosage_range": { "min": 20, "max": 40, "unit": "mg/day" }
+  },
+  {
+    "id": "DR024",
+    "name": "Salbutamol",
+    "class": "Beta-2 Agonist",
+    "uses": ["asthma", "COPD"],
+    "interactions": [
+      { "drug": "Beta blockers", "severity": "medium", "effect": "reduced bronchodilation" }
+    ],
+    "contraindications": ["tachyarrhythmia"],
+    "dosage_range": { "min": 2.5, "max": 10, "unit": "mg/day" }
+  },
+  {
+    "id": "DR025",
+    "name": "Prednisolone",
+    "class": "Corticosteroid",
+    "uses": ["asthma", "autoimmune disorders"],
+    "interactions": [
+      { "drug": "NSAIDs", "severity": "medium", "effect": "GI bleeding risk" }
+    ],
+    "contraindications": ["systemic fungal infections"],
+    "dosage_range": { "min": 5, "max": 60, "unit": "mg/day" }
+  },
+  {
+    "id": "DR026",
+    "name": "Escitalopram",
+    "class": "SSRI",
+    "uses": ["depression", "generalized anxiety disorder"],
+    "interactions": [
+      { "drug": "MAOI", "severity": "high", "effect": "serotonin syndrome" }
+    ],
+    "contraindications": ["concurrent MAOI use"],
+    "dosage_range": { "min": 10, "max": 20, "unit": "mg/day" }
+  },
+  {
+    "id": "DR027",
+    "name": "Citalopram",
+    "class": "SSRI",
+    "uses": ["depression"],
+    "interactions": [
+      { "drug": "QT prolonging drugs", "severity": "high", "effect": "arrhythmia risk" }
+    ],
+    "contraindications": ["congenital long QT syndrome"],
+    "dosage_range": { "min": 20, "max": 40, "unit": "mg/day" }
+  },
+  {
+    "id": "DR028",
+    "name": "Mirtazapine",
+    "class": "Atypical Antidepressant",
+    "uses": ["depression", "insomnia"],
+    "interactions": [
+      { "drug": "Alcohol", "severity": "medium", "effect": "increased sedation" }
+    ],
+    "contraindications": ["concurrent MAOI use"],
+    "dosage_range": { "min": 15, "max": 45, "unit": "mg/day" }
+  },
+  {
+    "id": "DR029",
+    "name": "Duloxetine",
+    "class": "SNRI",
+    "uses": ["depression", "neuropathic pain"],
+    "interactions": [
+      { "drug": "Tramadol", "severity": "medium", "effect": "serotonin syndrome" }
+    ],
+    "contraindications": ["severe liver disease"],
+    "dosage_range": { "min": 30, "max": 120, "unit": "mg/day" }
+  },
+  {
+    "id": "DR030",
+    "name": "Tramadol",
+    "class": "Opioid Analgesic",
+    "uses": ["moderate pain"],
+    "interactions": [
+      { "drug": "SSRIs", "severity": "medium", "effect": "seizure risk" }
+    ],
+    "contraindications": ["epilepsy"],
+    "dosage_range": { "min": 100, "max": 400, "unit": "mg/day" }
+  },
+
+  {
+    "id": "DR031",
+    "name": "Morphine",
+    "class": "Opioid Analgesic",
+    "uses": ["severe pain"],
+    "interactions": [
+      { "drug": "Benzodiazepines", "severity": "high", "effect": "respiratory depression" }
+    ],
+    "contraindications": ["severe respiratory depression"],
+    "dosage_range": { "min": 10, "max": 200, "unit": "mg/day" }
+  },
+  {
+    "id": "DR032",
+    "name": "Diazepam",
+    "class": "Benzodiazepine",
+    "uses": ["anxiety", "muscle spasm"],
+    "interactions": [
+      { "drug": "Opioids", "severity": "high", "effect": "respiratory depression" }
+    ],
+    "contraindications": ["severe respiratory insufficiency"],
+    "dosage_range": { "min": 5, "max": 40, "unit": "mg/day" }
+  },
+  {
+    "id": "DR033",
+    "name": "Lorazepam",
+    "class": "Benzodiazepine",
+    "uses": ["anxiety", "acute agitation"],
+    "interactions": [
+      { "drug": "Alcohol", "severity": "high", "effect": "CNS depression" }
+    ],
+    "contraindications": ["sleep apnea"],
+    "dosage_range": { "min": 1, "max": 10, "unit": "mg/day" }
+  },
+  {
+    "id": "DR034",
+    "name": "Metoprolol",
+    "class": "Beta Blocker",
+    "uses": ["hypertension", "heart failure"],
+    "interactions": [
+      { "drug": "Calcium channel blockers", "severity": "medium", "effect": "bradycardia" }
+    ],
+    "contraindications": ["severe bradycardia"],
+    "dosage_range": { "min": 50, "max": 200, "unit": "mg/day" }
+  },
+  {
+    "id": "DR035",
+    "name": "Propranolol",
+    "class": "Beta Blocker",
+    "uses": ["hypertension", "tremor"],
+    "interactions": [
+      { "drug": "Salbutamol", "severity": "medium", "effect": "reduced bronchodilation" }
+    ],
+    "contraindications": ["asthma"],
+    "dosage_range": { "min": 40, "max": 320, "unit": "mg/day" }
+  },
+
+  {
+    "id": "DR036",
+    "name": "Hydrochlorothiazide",
+    "class": "Thiazide Diuretic",
+    "uses": ["hypertension"],
+    "interactions": [
+      { "drug": "Lithium", "severity": "high", "effect": "lithium toxicity" }
+    ],
+    "contraindications": ["anuria"],
+    "dosage_range": { "min": 12.5, "max": 50, "unit": "mg/day" }
+  },
+  {
+    "id": "DR037",
+    "name": "Furosemide",
+    "class": "Loop Diuretic",
+    "uses": ["heart failure", "edema"],
+    "interactions": [
+      { "drug": "Aminoglycosides", "severity": "high", "effect": "ototoxicity" }
+    ],
+    "contraindications": ["severe dehydration"],
+    "dosage_range": { "min": 20, "max": 200, "unit": "mg/day" }
+  },
+  {
+    "id": "DR038",
+    "name": "Spironolactone",
+    "class": "Potassium-sparing Diuretic",
+    "uses": ["heart failure", "hyperaldosteronism"],
+    "interactions": [
+      { "drug": "ACE inhibitors", "severity": "high", "effect": "hyperkalemia" }
+    ],
+    "contraindications": ["hyperkalemia"],
+    "dosage_range": { "min": 25, "max": 100, "unit": "mg/day" }
+  },
+  {
+    "id": "DR039",
+    "name": "Levothyroxine",
+    "class": "Thyroid Hormone",
+    "uses": ["hypothyroidism"],
+    "interactions": [
+      { "drug": "Calcium supplements", "severity": "low", "effect": "reduced absorption" }
+    ],
+    "contraindications": ["untreated thyrotoxicosis"],
+    "dosage_range": { "min": 50, "max": 200, "unit": "mcg/day" }
+  },
+  {
+    "id": "DR040",
+    "name": "Methimazole",
+    "class": "Antithyroid Agent",
+    "uses": ["hyperthyroidism"],
+    "interactions": [
+      { "drug": "Warfarin", "severity": "medium", "effect": "altered anticoagulation" }
+    ],
+    "contraindications": ["early pregnancy"],
+    "dosage_range": { "min": 5, "max": 40, "unit": "mg/day" }
+  },
+
+  {
+    "id": "DR041",
+    "name": "Ranitidine",
+    "class": "H2 Blocker",
+    "uses": ["GERD", "peptic ulcer"],
+    "interactions": [
+      { "drug": "Warfarin", "severity": "low", "effect": "increased INR" }
+    ],
+    "contraindications": ["acute porphyria"],
+    "dosage_range": { "min": 150, "max": 300, "unit": "mg/day" }
+  },
+  {
+    "id": "DR042",
+    "name": "Ondansetron",
+    "class": "Antiemetic",
+    "uses": ["nausea", "vomiting"],
+    "interactions": [
+      { "drug": "SSRIs", "severity": "medium", "effect": "serotonin syndrome" }
+    ],
+    "contraindications": ["congenital long QT syndrome"],
+    "dosage_range": { "min": 8, "max": 24, "unit": "mg/day" }
+  },
+  {
+    "id": "DR043",
+    "name": "Metronidazole",
+    "class": "Nitroimidazole Antibiotic",
+    "uses": ["anaerobic infections"],
+    "interactions": [
+      { "drug": "Alcohol", "severity": "high", "effect": "disulfiram-like reaction" }
+    ],
+    "contraindications": ["first trimester pregnancy"],
+    "dosage_range": { "min": 500, "max": 1500, "unit": "mg/day" }
+  },
+  {
+    "id": "DR044",
+    "name": "Clarithromycin",
+    "class": "Macrolide Antibiotic",
+    "uses": ["respiratory infections"],
+    "interactions": [
+      { "drug": "Statins", "severity": "high", "effect": "myopathy risk" }
+    ],
+    "contraindications": ["QT prolongation"],
+    "dosage_range": { "min": 500, "max": 1000, "unit": "mg/day" }
+  },
+  {
+    "id": "DR045",
+    "name": "Vancomycin",
+    "class": "Glycopeptide Antibiotic",
+    "uses": ["severe gram-positive infections"],
+    "interactions": [
+      { "drug": "Aminoglycosides", "severity": "high", "effect": "nephrotoxicity" }
+    ],
+    "contraindications": ["hypersensitivity"],
+    "dosage_range": { "min": 1000, "max": 3000, "unit": "mg/day" }
+  },
+
+  {
+    "id": "DR046",
+    "name": "Rifampicin",
+    "class": "Antitubercular Antibiotic",
+    "uses": ["tuberculosis"],
+    "interactions": [
+      { "drug": "Oral contraceptives", "severity": "high", "effect": "reduced efficacy" }
+    ],
+    "contraindications": ["severe liver disease"],
+    "dosage_range": { "min": 450, "max": 600, "unit": "mg/day" }
+  },
+  {
+    "id": "DR047",
+    "name": "Ethambutol",
+    "class": "Antitubercular Antibiotic",
+    "uses": ["tuberculosis"],
+    "interactions": [],
+    "contraindications": ["optic neuritis"],
+    "dosage_range": { "min": 800, "max": 1600, "unit": "mg/day" }
+  },
+  {
+    "id": "DR048",
+    "name": "Allopurinol",
+    "class": "Xanthine Oxidase Inhibitor",
+    "uses": ["gout"],
+    "interactions": [
+      { "drug": "Azathioprine", "severity": "high", "effect": "bone marrow suppression" }
+    ],
+    "contraindications": ["severe hypersensitivity"],
+    "dosage_range": { "min": 100, "max": 300, "unit": "mg/day" }
+  },
+  {
+    "id": "DR049",
+    "name": "Colchicine",
+    "class": "Anti-inflammatory",
+    "uses": ["acute gout"],
+    "interactions": [
+      { "drug": "Macrolide antibiotics", "severity": "high", "effect": "toxicity risk" }
+    ],
+    "contraindications": ["severe renal impairment"],
+    "dosage_range": { "min": 0.5, "max": 2, "unit": "mg/day" }
+  },
+  {
+    "id": "DR050",
+    "name": "Hydroxychloroquine",
+    "class": "Antimalarial / Immunomodulator",
+    "uses": ["lupus", "rheumatoid arthritis"],
+    "interactions": [
+      { "drug": "QT prolonging drugs", "severity": "high", "effect": "arrhythmia risk" }
+    ],
+    "contraindications": ["retinal disease"],
+    "dosage_range": { "min": 200, "max": 400, "unit": "mg/day" }
+  }
+]

@@ -1,0 +1,414 @@
+[
+  {
+    "id": "D001",
+    "name": "Community-Acquired Pneumonia",
+    "category": "Respiratory",
+    "symptoms": ["fever", "productive cough", "cough","chest pain", "shortness of breath"],
+    "lab_patterns": ["high WBC", "elevated CRP", "low oxygen saturation","infection"],
+    "risk_factors": ["elderly", "smoking", "chronic lung disease"],
+    "description": "Acute infection of lung parenchyma acquired outside healthcare settings.",
+    "treatment": ["antibiotics", "oxygen therapy", "antipyretics"]
+  },
+  {
+    "id": "D002",
+    "name": "Chronic Obstructive Pulmonary Disease Exacerbation",
+    "category": "Respiratory",
+    "symptoms": ["worsening dyspnea", "chronic cough", "wheezing"],
+    "lab_patterns": ["hypercapnia", "low oxygen saturation"],
+    "risk_factors": ["smoking", "air pollution", "alpha-1 antitrypsin deficiency"],
+    "description": "Acute worsening of respiratory symptoms in patients with COPD.",
+    "treatment": ["bronchodilators", "systemic corticosteroids", "noninvasive ventilation"]
+  },
+  {
+    "id": "D003",
+    "name": "Asthma Exacerbation",
+    "category": "Respiratory",
+    "symptoms": ["wheezing", "chest tightness", "shortness of breath"],
+    "lab_patterns": ["eosinophilia", "normal chest X-ray"],
+    "risk_factors": ["allergies", "viral infection", "exercise"],
+    "description": "Reversible airway obstruction due to airway inflammation.",
+    "treatment": ["short-acting bronchodilators", "inhaled corticosteroids"]
+  },
+  {
+    "id": "D004",
+    "name": "Pulmonary Embolism",
+    "category": "Cardiovascular",
+    "symptoms": ["sudden dyspnea", "pleuritic chest pain", "tachycardia"],
+    "lab_patterns": ["elevated D-dimer", "hypoxemia"],
+    "risk_factors": ["recent surgery", "immobility", "malignancy"],
+    "description": "Obstruction of pulmonary arteries by thrombus.",
+    "treatment": ["anticoagulation", "thrombolysis"]
+  },
+  {
+    "id": "D005",
+    "name": "Acute Coronary Syndrome",
+    "category": "Cardiovascular",
+    "symptoms": ["chest pain", "radiating arm pain", "diaphoresis", "nausea"],
+    "lab_patterns": ["elevated troponin", "ECG changes"],
+    "risk_factors": ["hypertension", "diabetes", "smoking"],
+    "description": "Spectrum of conditions caused by reduced coronary blood flow.",
+    "treatment": ["antiplatelets", "statins", "revascularization"]
+  },
+  {
+    "id": "D006",
+    "name": "Heart Failure Exacerbation",
+    "category": "Cardiovascular",
+    "symptoms": ["orthopnea", "leg swelling", "fatigue", "dyspnea"],
+    "lab_patterns": ["elevated BNP", "hyponatremia"],
+    "risk_factors": ["ischemic heart disease", "hypertension"],
+    "description": "Worsening symptoms due to impaired cardiac pump function.",
+    "treatment": ["diuretics", "ACE inhibitors", "fluid restriction"]
+  },
+  {
+    "id": "D007",
+    "name": "Hypertension",
+    "category": "Cardiovascular",
+    "symptoms": ["headache", "often asymptomatic"],
+    "lab_patterns": ["normal labs", "possible elevated creatinine"],
+    "risk_factors": ["obesity", "family history", "high salt diet"],
+    "description": "Chronic elevation of systemic arterial blood pressure.",
+    "treatment": ["lifestyle modification", "antihypertensives"]
+  },
+  {
+    "id": "D008",
+    "name": "Atrial Fibrillation",
+    "category": "Cardiovascular",
+    "symptoms": ["palpitations", "fatigue", "dyspnea"],
+    "lab_patterns": ["irregular ECG rhythm"],
+    "risk_factors": ["advanced age", "heart disease", "thyroid disorder"],
+    "description": "Irregular and often rapid heart rhythm originating from atria.",
+    "treatment": ["rate control", "anticoagulation"]
+  },
+  {
+    "id": "D009",
+    "name": "Type 2 Diabetes Mellitus",
+    "category": "Endocrine",
+    "symptoms": ["polyuria", "polydipsia", "fatigue"],
+    "lab_patterns": ["elevated HbA1c", "elevated fasting glucose"],
+    "risk_factors": ["obesity", "sedentary lifestyle", "family history"],
+    "description": "Chronic metabolic disorder characterized by insulin resistance.",
+    "treatment": ["oral hypoglycemics", "insulin", "diet control"]
+  },
+  {
+    "id": "D010",
+    "name": "Diabetic Ketoacidosis",
+    "category": "Endocrine",
+    "symptoms": ["nausea", "vomiting", "abdominal pain", "confusion"],
+    "lab_patterns": ["high glucose", "ketonemia", "metabolic acidosis"],
+    "risk_factors": ["type 1 diabetes", "infection", "missed insulin"],
+    "description": "Life-threatening complication caused by insulin deficiency.",
+    "treatment": ["IV insulin", "fluid resuscitation", "electrolyte correction"]
+  },
+  {
+    "id": "D011",
+    "name": "Gastroesophageal Reflux Disease",
+    "category": "Gastrointestinal",
+    "symptoms": ["heartburn", "regurgitation", "chest discomfort"],
+    "lab_patterns": ["normal labs"],
+    "risk_factors": ["obesity", "pregnancy", "hiatal hernia"],
+    "description": "Chronic condition where stomach acid flows back into the esophagus.",
+    "treatment": ["proton pump inhibitors", "lifestyle modification"]
+  },
+  {
+    "id": "D012",
+    "name": "Peptic Ulcer Disease",
+    "category": "Gastrointestinal",
+    "symptoms": ["epigastric pain", "nausea", "bloating"],
+    "lab_patterns": ["possible anemia"],
+    "risk_factors": ["H. pylori infection", "NSAID use"],
+    "description": "Ulceration of gastric or duodenal mucosa due to acid injury.",
+    "treatment": ["proton pump inhibitors", "H. pylori eradication therapy"]
+  },
+  {
+    "id": "D013",
+    "name": "Acute Pancreatitis",
+    "category": "Gastrointestinal",
+    "symptoms": ["severe epigastric pain", "vomiting", "fever"],
+    "lab_patterns": ["elevated amylase", "elevated lipase"],
+    "risk_factors": ["alcohol use", "gallstones"],
+    "description": "Inflammation of the pancreas causing acute abdominal pain.",
+    "treatment": ["IV fluids", "pain control", "bowel rest"]
+  },
+  {
+    "id": "D014",
+    "name": "Acute Cholecystitis",
+    "category": "Gastrointestinal",
+    "symptoms": ["right upper quadrant pain", "fever", "nausea"],
+    "lab_patterns": ["elevated WBC", "mildly elevated LFTs"],
+    "risk_factors": ["gallstones", "obesity", "female gender"],
+    "description": "Inflammation of gallbladder usually due to gallstone obstruction.",
+    "treatment": ["antibiotics", "cholecystectomy"]
+  },
+  {
+    "id": "D015",
+    "name": "Viral Hepatitis",
+    "category": "Gastrointestinal",
+    "symptoms": ["fatigue", "jaundice", "abdominal discomfort"],
+    "lab_patterns": ["elevated ALT", "elevated AST"],
+    "risk_factors": ["unsafe injections", "contaminated food", "unprotected sex"],
+    "description": "Liver inflammation caused by hepatotropic viruses.",
+    "treatment": ["supportive care", "antivirals in select cases"]
+  },
+  {
+    "id": "D016",
+    "name": "Urinary Tract Infection",
+    "category": "Renal",
+    "symptoms": ["dysuria", "frequency", "lower abdominal pain"],
+    "lab_patterns": ["positive urine leukocytes", "positive nitrites"],
+    "risk_factors": ["female gender", "diabetes", "urinary catheterization"],
+    "description": "Bacterial infection of urinary tract.",
+    "treatment": ["antibiotics", "hydration"]
+  },
+  {
+    "id": "D017",
+    "name": "Acute Kidney Injury",
+    "category": "Renal",
+    "symptoms": ["reduced urine output", "fatigue", "confusion"],
+    "lab_patterns": ["elevated creatinine", "elevated BUN"],
+    "risk_factors": ["dehydration", "sepsis", "nephrotoxic drugs"],
+    "description": "Sudden decline in renal function over hours to days.",
+    "treatment": ["fluid management", "address underlying cause"]
+  },
+  {
+    "id": "D018",
+    "name": "Chronic Kidney Disease",
+    "category": "Renal",
+    "symptoms": ["fatigue", "edema", "poor appetite"],
+    "lab_patterns": ["persistent elevated creatinine", "proteinuria"],
+    "risk_factors": ["diabetes", "hypertension"],
+    "description": "Progressive loss of kidney function over time.",
+    "treatment": ["blood pressure control", "dialysis in advanced stages"]
+  },
+  {
+    "id": "D019",
+    "name": "Ischemic Stroke",
+    "category": "Neurological",
+    "symptoms": ["sudden weakness", "slurred speech", "facial droop"],
+    "lab_patterns": ["normal labs", "imaging evidence of infarct"],
+    "risk_factors": ["hypertension", "atrial fibrillation"],
+    "description": "Cerebral infarction caused by arterial occlusion.",
+    "treatment": ["thrombolysis", "antiplatelet therapy"]
+  },
+  {
+    "id": "D020",
+    "name": "Transient Ischemic Attack",
+    "category": "Neurological",
+    "symptoms": ["temporary weakness", "speech difficulty"],
+    "lab_patterns": ["normal labs"],
+    "risk_factors": ["vascular disease", "smoking"],
+    "description": "Brief neurological dysfunction without permanent infarction.",
+    "treatment": ["antiplatelets", "risk factor control"]
+  },
+  {
+    "id": "D021",
+    "name": "Epilepsy",
+    "category": "Neurological",
+    "symptoms": ["recurrent seizures", "loss of consciousness"],
+    "lab_patterns": ["normal labs"],
+    "risk_factors": ["head injury", "genetic predisposition"],
+    "description": "Chronic neurological disorder characterized by recurrent seizures.",
+    "treatment": ["antiepileptic drugs"]
+  },
+  {
+    "id": "D022",
+    "name": "Meningitis",
+    "category": "Neurological",
+    "symptoms": ["fever", "neck stiffness", "altered consciousness"],
+    "lab_patterns": ["elevated CSF WBC", "elevated CSF protein"],
+    "risk_factors": ["immunocompromised", "recent infection"],
+    "description": "Inflammation of meninges due to infection.",
+    "treatment": ["IV antibiotics", "antivirals"]
+  },
+  {
+    "id": "D023",
+    "name": "Parkinson’s Disease",
+    "category": "Neurological",
+    "symptoms": ["tremor", "bradykinesia", "rigidity"],
+    "lab_patterns": ["normal labs"],
+    "risk_factors": ["advanced age", "genetic factors"],
+    "description": "Neurodegenerative disorder affecting motor control.",
+    "treatment": ["dopaminergic agents", "physical therapy"]
+  },
+  {
+    "id": "D024",
+    "name": "Sepsis",
+    "category": "Infectious",
+    "symptoms": ["fever", "hypotension", "confusion"],
+    "lab_patterns": ["elevated lactate", "elevated WBC"],
+    "risk_factors": ["elderly", "immunosuppression"],
+    "description": "Life-threatening organ dysfunction due to dysregulated infection response.",
+    "treatment": ["IV antibiotics", "fluid resuscitation"]
+  },
+  {
+    "id": "D025",
+    "name": "Influenza",
+    "category": "Infectious",
+    "symptoms": ["fever", "body aches", "dry cough"],
+    "lab_patterns": ["normal WBC", "positive viral test"],
+    "risk_factors": ["elderly", "chronic illness"],
+    "description": "Acute viral respiratory infection.",
+    "treatment": ["antivirals", "supportive care"]
+  },
+  {
+    "id": "D026",
+    "name": "COVID-19",
+    "category": "Infectious",
+    "symptoms": ["fever", "loss of taste", "shortness of breath"],
+    "lab_patterns": ["elevated CRP", "lymphopenia"],
+    "risk_factors": ["advanced age", "comorbidities"],
+    "description": "Respiratory infection caused by SARS-CoV-2.",
+    "treatment": ["supportive care", "antivirals"]
+  },
+  {
+    "id": "D027",
+    "name": "Tuberculosis",
+    "category": "Infectious",
+    "symptoms": ["chronic cough", "weight loss", "night sweats"],
+    "lab_patterns": ["positive sputum AFB"],
+    "risk_factors": ["crowded housing", "immunocompromised"],
+    "description": "Chronic infection caused by Mycobacterium tuberculosis.",
+    "treatment": ["multi-drug anti-tubercular therapy"]
+  },
+  {
+    "id": "D028",
+    "name": "Dengue Fever",
+    "category": "Infectious",
+    "symptoms": ["high fever", "joint pain", "headache"],
+    "lab_patterns": ["low platelet count", "elevated hematocrit"],
+    "risk_factors": ["mosquito exposure", "tropical regions"],
+    "description": "Mosquito-borne viral infection causing systemic illness.",
+    "treatment": ["supportive care", "fluid management"]
+  },
+  {
+    "id": "D029",
+    "name": "Iron Deficiency Anemia",
+    "category": "Hematologic",
+    "symptoms": ["fatigue", "pallor", "shortness of breath"],
+    "lab_patterns": ["low hemoglobin", "low ferritin"],
+    "risk_factors": ["poor diet", "chronic blood loss"],
+    "description": "Anemia due to insufficient iron for hemoglobin synthesis.",
+    "treatment": ["iron supplementation"]
+  },
+  {
+    "id": "D030",
+    "name": "Sickle Cell Crisis",
+    "category": "Hematologic",
+    "symptoms": ["severe pain", "fatigue", "infections"],
+    "lab_patterns": ["anemia", "reticulocytosis"],
+    "risk_factors": ["sickle cell disease"],
+    "description": "Painful episodes caused by vaso-occlusion in sickle cell disease.",
+    "treatment": ["hydration", "pain control", "oxygen"]
+  },
+
+  {
+    "id": "D031",
+    "name": "Systemic Lupus Erythematosus",
+    "category": "Autoimmune",
+    "symptoms": ["joint pain", "fatigue", "malar rash"],
+    "lab_patterns": ["positive ANA", "low complement levels"],
+    "risk_factors": ["female gender", "genetic predisposition"],
+    "description": "Chronic autoimmune disease affecting multiple organ systems.",
+    "treatment": ["immunosuppressants", "corticosteroids"]
+  },
+  {
+    "id": "D032",
+    "name": "Rheumatoid Arthritis",
+    "category": "Autoimmune",
+    "symptoms": ["joint stiffness", "joint pain", "swelling"],
+    "lab_patterns": ["positive rheumatoid factor", "elevated ESR"],
+    "risk_factors": ["female gender", "smoking"],
+    "description": "Chronic inflammatory arthritis affecting small joints symmetrically.",
+    "treatment": ["DMARDs", "NSAIDs"]
+  },
+  {
+    "id": "D033",
+    "name": "Osteoarthritis",
+    "category": "Musculoskeletal",
+    "symptoms": ["joint pain", "stiffness", "reduced mobility"],
+    "lab_patterns": ["normal labs"],
+    "risk_factors": ["aging", "obesity", "joint overuse"],
+    "description": "Degenerative joint disease due to cartilage wear.",
+    "treatment": ["analgesics", "physical therapy"]
+  },
+  {
+    "id": "D034",
+    "name": "Septic Arthritis",
+    "category": "Musculoskeletal",
+    "symptoms": ["acute joint pain", "fever", "joint swelling"],
+    "lab_patterns": ["elevated WBC", "positive joint fluid culture"],
+    "risk_factors": ["immunocompromised", "joint prosthesis"],
+    "description": "Joint infection causing rapid joint destruction.",
+    "treatment": ["IV antibiotics", "joint drainage"]
+  },
+  {
+    "id": "D035",
+    "name": "Major Depressive Disorder",
+    "category": "Mental Health",
+    "symptoms": ["low mood", "loss of interest", "fatigue"],
+    "lab_patterns": ["normal labs"],
+    "risk_factors": ["psychosocial stress", "family history"],
+    "description": "Mood disorder characterized by persistent depressive symptoms.",
+    "treatment": ["psychotherapy", "antidepressants"]
+  },
+  {
+    "id": "D036",
+    "name": "Generalized Anxiety Disorder",
+    "category": "Mental Health",
+    "symptoms": ["excessive worry", "restlessness", "sleep disturbance"],
+    "lab_patterns": ["normal labs"],
+    "risk_factors": ["stress", "genetic predisposition"],
+    "description": "Chronic anxiety with excessive worry across contexts.",
+    "treatment": ["cognitive behavioral therapy", "anxiolytics"]
+  },
+  {
+    "id": "D037",
+    "name": "Lung Cancer",
+    "category": "Oncology",
+    "symptoms": ["chronic cough", "weight loss", "hemoptysis"],
+    "lab_patterns": ["imaging abnormalities", "possible anemia"],
+    "risk_factors": ["smoking", "occupational exposure"],
+    "description": "Malignant tumor arising from lung tissue.",
+    "treatment": ["surgery", "chemotherapy", "radiation"]
+  },
+  {
+    "id": "D038",
+    "name": "Breast Cancer",
+    "category": "Oncology",
+    "symptoms": ["breast lump", "skin changes"],
+    "lab_patterns": ["abnormal imaging"],
+    "risk_factors": ["female gender", "family history"],
+    "description": "Malignant growth arising from breast tissue.",
+    "treatment": ["surgery", "chemotherapy", "hormonal therapy"]
+  },
+  {
+    "id": "D039",
+    "name": "Colorectal Cancer",
+    "category": "Oncology",
+    "symptoms": ["altered bowel habits", "weight loss", "rectal bleeding"],
+    "lab_patterns": ["iron deficiency anemia"],
+    "risk_factors": ["age >50", "family history"],
+    "description": "Cancer arising from colon or rectal epithelium.",
+    "treatment": ["surgery", "chemotherapy"]
+  },
+  {
+    "id": "D040",
+    "name": "Dehydration",
+    "category": "General",
+    "symptoms": ["dry mouth", "dizziness", "reduced urine output"],
+    "lab_patterns": ["elevated hematocrit", "elevated sodium"],
+    "risk_factors": ["vomiting", "diarrhea", "elderly"],
+    "description": "Deficit of total body water.",
+    "treatment": ["oral or IV fluids"]
+  },
+
+  {
+    "id": "D041",
+    "name": "Heat Stroke",
+    "category": "General",
+    "symptoms": ["hyperthermia", "confusion", "collapse"],
+    "lab_patterns": ["elevated CK", "metabolic acidosis"],
+    "risk_factors": ["heat exposure", "dehydration"],
+    "description": "Severe heat-related illness causing organ dysfunction.",
+    "treatment": ["rapid cooling", "IV fluids"]
+  }
+]
