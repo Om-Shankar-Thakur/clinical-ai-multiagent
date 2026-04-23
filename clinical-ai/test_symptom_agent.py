@@ -11,10 +11,16 @@ symptom_agent = SymptomAgent()
 lab_agent = LabAgent()
 diagnosis_agent = DiagnosisAgent()
 
+
+
+
 patient = Patient(
-   symptoms=["chest pain", "radiating arm pain", "nausea"],
-   labs={"WBC": 9000, "O2": 88, "lactate": 5}
+    symptoms=["chest pain", "radiating arm pain", "nausea"],
+    labs={"WBC": 9000, "O2": 88, "lactate": 5}
 )
+
+
+
 symptom_result = symptom_agent.run(patient)
 lab_result = lab_agent.run(patient)
 

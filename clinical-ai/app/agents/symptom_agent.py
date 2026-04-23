@@ -35,23 +35,24 @@ class SymptomAgent:
         for p in disease.get("lab_patterns", []))
         
         # base score
-        score = (0.6 * symptom_score) + (0.4 * lab_score)
+        score = (0.7 * symptom_score) + (0.3 * lab_score)
 
         # 🔥 boost logic
         if infection_signal and infection_match:
-            score += 0.2
+            score += 0.15
+        elif infection_signal:
+            score-=0-1
 
         # 🔥 penalize mismatch
         if infection_signal and not infection_match:
             score -= 0.1
         return {
             "final_score": max(round(score, 2), 0),
-            "symptom_score": self.symptom_score,
-            "lab_score": self.lab_score
+            "symptom_score": round(symptom_score,2),
+            "lab_score": round(lab_score, 2)
         }
    
 
-    # 🔥 Improved matching (substring match)
     def symptom_score(self, input_symptoms, disease_symptoms):
 
         match_count = 0
@@ -63,7 +64,6 @@ class SymptomAgent:
                     break
         return match_count / len(input_symptoms)
 
-    # 🔥 Better lab logic
     def lab_score(self, labs, patterns):
         score = 0
         o2 = labs.get("O2", labs.get("oxygen", 100))
