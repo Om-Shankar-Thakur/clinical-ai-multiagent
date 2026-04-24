@@ -1,6 +1,9 @@
 from app.prompts.diagnosis_prompt import build_diagnosis_prompt
 from app.services.openai_service import OpenAIService
 from app.safety.guardrails import validate_llm_output
+from app.rag.retriever import retrieve
+
+import json
 
 class DiagnosisAgent:
 
@@ -57,12 +60,54 @@ class DiagnosisAgent:
     
     def __init__(self):
         self.llm = OpenAIService()
-
+    
     def build_reason(self, top, lab_result, uncertainty):
+
         if not top or top["confidence"] < 0.2:
-            return "Insufficient data for reliable clinical reasoning."
-        prompt = build_diagnosis_prompt(top, lab_result, uncertainty)
+            return {
+                "diagnosis": "Insufficient Data",
+                "reasoning": "Not enough confidence for clinical reasoning",
+                "severity": "unknown",
+                "next_steps": "Collect more patient data"
+            }
+
+        # Step 1: Better semantic query
+        query = f"""
+            Disease: {top['name']}
+            Symptoms: {', '.join(top['matched_symptoms'])}
+            Lab alerts: {', '.join(lab_result.get('alerts', []))}
+        """
+
+        # Step 2: Retrieve
+        docs = retrieve(query, k=3)
+
+        # Step 3: Safe context
+        context = "\n".join([
+            doc.get("text", str(doc))[:300]
+            for doc in docs
+        ])
+
+        # Step 4: Prompt with RAG
+        prompt = build_diagnosis_prompt(top, lab_result, uncertainty, context)
         try:
-            return self.llm.generate(prompt)
-        except Exception as e:
-            return "AI reasoning unavailable. Falling back to rule-based explanation."
+            response = self.llm.generate(prompt)
+            print("RAW LLM OUTPUT:\n", response)
+
+            # Guardrails
+            is_valid, safe_output = validate_llm_output(response)
+            if not is_valid:
+                return {
+                    "diagnosis": "Unavailable",
+                    "reasoning": safe_output,
+                    "severity": "unknown",
+                    "next_steps": "Consult a medical professional"
+                }
+            return safe_output
+        except Exception:
+            return {
+                "diagnosis": "System Error",
+                "reasoning": "AI reasoning unavailable",
+                "severity": "unknown",
+                "next_steps": "Retry or fallback to manual review"
+            }
+    

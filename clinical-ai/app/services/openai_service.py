@@ -19,6 +19,7 @@ class OpenAIService:
                {"role": "user", "content": prompt}
            ],
            temperature=0.2,
-           max_tokens=300
+           max_tokens=300,
+           response_format={"type": "json_object"}
        )
        return response.choices[0].message.content.strip()
