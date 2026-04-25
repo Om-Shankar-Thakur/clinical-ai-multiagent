@@ -8,38 +8,62 @@ import json
 class DiagnosisAgent:
 
     def run(self, symptom_results, lab_result):
+
+        # Step 0: mark lab consistency (no mutation risk here)
         for d in symptom_results:
             d["consistent"] = self.is_consistent(d["name"], lab_result)
 
+        # Step 1: strongest symptom-based diagnosis (DO NOT MUTATE)
+        top_by_symptom = max(
+            symptom_results,
+            key=lambda x: x["confidence"]
+        )
+
+        # Step 2: lab-consistent diagnoses
         consistent = [d for d in symptom_results if d["consistent"]]
 
         if consistent:
-            top = max(consistent, key=lambda x: x["confidence"])
-            uncertainty = False
+            top_by_lab = max(consistent, key=lambda x: x["confidence"])
+
+            # Only prefer lab match if not much weaker
+            if (top_by_symptom["confidence"] - top_by_lab["confidence"]) <= 0.15:
+                chosen = top_by_lab
+                uncertainty = False
+            else:
+                chosen = top_by_symptom
+                uncertainty = True
         else:
-            # ⚠️ Lab–symptom conflict
-            top = symptom_results[0]
-            top["confidence"] = round(top["confidence"] * 0.5, 2)
+            # Full conflict → keep strongest symptom diagnosis
+            chosen = top_by_symptom
             uncertainty = True
 
+        # Step 3: compute FINAL confidence (no in-place mutation)
+        final_confidence = (
+            round(chosen["confidence"] * 0.5, 2)
+            if uncertainty
+            else chosen["confidence"]
+        )
+
         final = {
-            "diagnosis": top["name"],
-            "confidence": top["confidence"],
+            "diagnosis": chosen["name"],
+            "confidence": final_confidence,
             "severity": lab_result["severity"],
             "risk_score": lab_result["risk_score"],
             "alerts": lab_result["alerts"],
-            "matched_symptoms": top["matched_symptoms"],
+            "matched_symptoms": chosen["matched_symptoms"],
             "uncertainty": uncertainty,
-            "explaination_type": "lab_driven" if uncertainty else "symptom-aligned",
-            "reason": self.build_reason(top, lab_result, uncertainty)
+            "explanation_type": "lab_driven" if uncertainty else "symptom-aligned",
+            "reason": self.build_reason(chosen, lab_result, uncertainty)
         }
 
+        # Sort candidates purely for display (safe)
         symptom_results.sort(key=lambda x: x["confidence"], reverse=True)
 
         return {
             "final": final,
             "candidates": symptom_results
         }
+
 
     def is_consistent(self, disease, lab_result):
         alerts = " ".join(lab_result["alerts"]).lower()

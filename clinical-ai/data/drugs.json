@@ -3,10 +3,11 @@
     "id": "DR001",
     "name": "Fluoxetine",
     "class": "SSRI",
-    "uses": ["depression", "anxiety"],
+    "uses": ["depression", "anxiety", "obsessive-compulsive disorder", "bulimia nervosa", "panic disorder", "premenstrual dysphoric disorder"],
     "interactions": [
       { "drug": "MAOI", "severity": "high", "effect": "serotonin syndrome" },
-      { "drug": "Tramadol", "severity": "medium", "effect": "increased seizure risk" }
+      { "drug": "Tramadol", "severity": "medium", "effect": "increased seizure risk" },
+     { "drug": "NSAIDs", "severity": "medium", "effect": "bleeding risk" }
     ],
     "contraindications": ["severe liver disease"],
     "dosage_range": { "min": 20, "max": 80, "unit": "mg/day" }
@@ -15,9 +16,10 @@
     "id": "DR002",
     "name": "Sertraline",
     "class": "SSRI",
-    "uses": ["depression", "PTSD"],
+    "uses": ["depression", "PTSD", "obsessive-compulsive disorder", "panic disorder", "social anxiety disorder"],
     "interactions": [
-      { "drug": "MAOI", "severity": "high", "effect": "serotonin syndrome" }
+      { "drug": "MAOI", "severity": "high", "effect": "serotonin syndrome" },
+     { "drug": "NSAIDs", "severity": "medium", "effect": "bleeding risk" }
     ],
     "contraindications": ["concurrent MAOI use"],
     "dosage_range": { "min": 50, "max": 200, "unit": "mg/day" }
@@ -26,7 +28,7 @@
     "id": "DR003",
     "name": "Amitriptyline",
     "class": "Tricyclic Antidepressant",
-    "uses": ["depression", "neuropathic pain"],
+    "uses": ["depression", "neuropathic pain", "migraine prophylaxis", "fibromyalgia", "chronic tension-type headache"],
     "interactions": [
       { "drug": "SSRIs", "severity": "medium", "effect": "QT prolongation" }
     ],
@@ -37,7 +39,7 @@
     "id": "DR004",
     "name": "Venlafaxine",
     "class": "SNRI",
-    "uses": ["depression", "anxiety"],
+    "uses": ["depression", "anxiety", "panic disorder", "social anxiety disorder", "generalized anxiety disorder"],
     "interactions": [
       { "drug": "Triptans", "severity": "medium", "effect": "serotonin syndrome" }
     ],
@@ -48,7 +50,7 @@
     "id": "DR005",
     "name": "Bupropion",
     "class": "NDRI",
-    "uses": ["depression", "smoking cessation"],
+    "uses": ["depression", "smoking cessation", "ADHD", "seasonal affective disorder"],
     "interactions": [
       { "drug": "MAOI", "severity": "high", "effect": "hypertensive crisis" }
     ],
@@ -60,7 +62,7 @@
     "id": "DR006",
     "name": "Amoxicillin",
     "class": "Penicillin Antibiotic",
-    "uses": ["pneumonia", "sinusitis"],
+    "uses": ["pneumonia", "sinusitis", "otitis media", "Helicobacter pylori infection", "skin infections", "urinary tract infections"],
     "interactions": [
       { "drug": "Methotrexate", "severity": "medium", "effect": "reduced methotrexate clearance" }
     ],
@@ -71,7 +73,7 @@
     "id": "DR007",
     "name": "Azithromycin",
     "class": "Macrolide Antibiotic",
-    "uses": ["respiratory infections", "STIs"],
+    "uses": ["respiratory infections", "STIs", "community-acquired pneumonia", "bronchitis", "sinusitis", "pharyngitis"],
     "interactions": [
       { "drug": "QT prolonging drugs", "severity": "high", "effect": "arrhythmia risk" }
     ],
@@ -82,7 +84,7 @@
     "id": "DR008",
     "name": "Ciprofloxacin",
     "class": "Fluoroquinolone Antibiotic",
-    "uses": ["UTI", "GI infections"],
+    "uses": ["urinary tract infection", "gastrointestinal infections", "typhoid fever", "prostatitis", "bone and joint infections"],
     "interactions": [
       { "drug": "Tizanidine", "severity": "high", "effect": "severe hypotension" }
     ],
@@ -93,7 +95,7 @@
     "id": "DR009",
     "name": "Doxycycline",
     "class": "Tetracycline Antibiotic",
-    "uses": ["acne", "respiratory infections"],
+    "uses": ["acne", "respiratory infections", "malaria prophylaxis", "Lyme disease", "chlamydia", "rosacea"],
     "interactions": [
       { "drug": "Antacids", "severity": "low", "effect": "reduced absorption" }
     ],
@@ -104,8 +106,21 @@
     "id": "DR010",
     "name": "Ceftriaxone",
     "class": "Cephalosporin Antibiotic",
-    "uses": ["sepsis", "pneumonia"],
-    "interactions": [],
+    "uses": [   "sepsis",
+                "pneumonia",
+                "meningitis",
+                "gonorrhea",
+                "urinary tract infection",
+                "intra-abdominal infection",
+                "cholecystitis",
+                "biliary infection",
+                "abdominal infection"
+              ],
+    "interactions": [
+ { "drug": "Calcium-containing IV solutions", "severity": "high", "effect": "precipitation in lungs/kidneys" },
+ { "drug": "Warfarin", "severity": "medium", "effect": "increased bleeding risk (↑ INR)" },
+ { "drug": "Aminoglycosides", "severity": "medium", "effect": "increased nephrotoxicity" }
+],
     "contraindications": ["neonatal hyperbilirubinemia"],
     "dosage_range": { "min": 1000, "max": 4000, "unit": "mg/day" }
   },
@@ -114,7 +129,7 @@
     "id": "DR011",
     "name": "Metformin",
     "class": "Biguanide",
-    "uses": ["type 2 diabetes"],
+    "uses": ["type 2 diabetes", "polycystic ovary syndrome", "prediabetes"],
     "interactions": [
       { "drug": "Contrast agents", "severity": "medium", "effect": "lactic acidosis risk" }
     ],
@@ -125,7 +140,7 @@
     "id": "DR012",
     "name": "Insulin Glargine",
     "class": "Long-acting Insulin",
-    "uses": ["diabetes mellitus"],
+    "uses": ["diabetes mellitus", "type 1 diabetes", "type 2 diabetes"],
     "interactions": [
       { "drug": "Beta blockers", "severity": "low", "effect": "masked hypoglycemia" }
     ],
@@ -136,7 +151,7 @@
     "id": "DR013",
     "name": "Amlodipine",
     "class": "Calcium Channel Blocker",
-    "uses": ["hypertension", "angina"],
+    "uses": ["hypertension", "angina", "coronary artery disease"],
     "interactions": [
       { "drug": "Simvastatin", "severity": "medium", "effect": "increased statin levels" }
     ],
@@ -147,7 +162,7 @@
     "id": "DR014",
     "name": "Lisinopril",
     "class": "ACE Inhibitor",
-    "uses": ["hypertension", "heart failure"],
+    "uses": ["hypertension", "heart failure", "post-myocardial infarction", "diabetic nephropathy"],
     "interactions": [
       { "drug": "Potassium supplements", "severity": "high", "effect": "hyperkalemia" }
     ],
@@ -158,7 +173,7 @@
     "id": "DR015",
     "name": "Losartan",
     "class": "ARB",
-    "uses": ["hypertension", "diabetic nephropathy"],
+    "uses": ["hypertension", "diabetic nephropathy", "heart failure", "stroke prevention"],
     "interactions": [
       { "drug": "NSAIDs", "severity": "medium", "effect": "renal impairment" }
     ],
@@ -170,7 +185,7 @@
     "id": "DR016",
     "name": "Atorvastatin",
     "class": "Statin",
-    "uses": ["hyperlipidemia"],
+    "uses": ["hyperlipidemia", "cardiovascular disease prevention", "stroke prevention", "hypertriglyceridemia"],
     "interactions": [
       { "drug": "Macrolide antibiotics", "severity": "medium", "effect": "myopathy risk" }
     ],
@@ -181,7 +196,7 @@
     "id": "DR017",
     "name": "Aspirin",
     "class": "Antiplatelet",
-    "uses": ["cardiovascular prevention"],
+    "uses": ["cardiovascular prevention", "acute coronary syndrome", "heart attack", "stroke prevention", "pain relief", "fever", "inflammation"],
     "interactions": [
       { "drug": "Warfarin", "severity": "high", "effect": "bleeding risk" }
     ],
@@ -192,7 +207,7 @@
     "id": "DR018",
     "name": "Clopidogrel",
     "class": "Antiplatelet",
-    "uses": ["stroke prevention"],
+    "uses": ["stroke prevention", "acute coronary syndrome", "peripheral artery disease"],
     "interactions": [
       { "drug": "Omeprazole", "severity": "medium", "effect": "reduced antiplatelet effect" }
     ],
@@ -203,10 +218,11 @@
     "id": "DR019",
     "name": "Warfarin",
     "class": "Anticoagulant",
-    "uses": ["atrial fibrillation", "DVT"],
+    "uses": ["atrial fibrillation", "DVT", "pulmonary embolism", "prosthetic heart valves", "stroke prevention"],
     "interactions": [
       { "drug": "NSAIDs", "severity": "high", "effect": "bleeding risk" },
-      { "drug": "Antibiotics", "severity": "medium", "effect": "INR elevation" }
+      { "drug": "Antibiotics", "severity": "medium", "effect": "INR elevation" },
+     { "drug": "Amiodarone", "severity": "high", "effect": "increased INR" }
     ],
     "contraindications": ["pregnancy"],
     "dosage_range": { "min": 2, "max": 10, "unit": "mg/day" }
@@ -215,7 +231,7 @@
     "id": "DR020",
     "name": "Heparin",
     "class": "Anticoagulant",
-    "uses": ["venous thromboembolism"],
+    "uses": ["venous thromboembolism", "pulmonary embolism", "acute coronary syndrome"],
     "interactions": [
       { "drug": "Aspirin", "severity": "high", "effect": "bleeding risk" }
     ],
@@ -227,7 +243,7 @@
     "id": "DR021",
     "name": "Paracetamol",
     "class": "Analgesic",
-    "uses": ["pain", "fever"],
+    "uses": ["pain", "fever", "headache", "mild to moderate pain"],
     "interactions": [
       { "drug": "Alcohol", "severity": "medium", "effect": "hepatotoxicity" }
     ],
@@ -238,9 +254,10 @@
     "id": "DR022",
     "name": "Ibuprofen",
     "class": "NSAID",
-    "uses": ["pain", "inflammation"],
+    "uses": ["pain", "inflammation", "fever", "arthritis"],
     "interactions": [
-      { "drug": "ACE inhibitors", "severity": "medium", "effect": "renal impairment" }
+      { "drug": "ACE inhibitors", "severity": "medium", "effect": "renal impairment" },
+     { "drug": "Warfarin", "severity": "high", "effect": "bleeding risk" }
     ],
     "contraindications": ["peptic ulcer disease"],
     "dosage_range": { "min": 400, "max": 2400, "unit": "mg/day" }
@@ -249,7 +266,7 @@
     "id": "DR023",
     "name": "Omeprazole",
     "class": "Proton Pump Inhibitor",
-    "uses": ["GERD", "peptic ulcer"],
+    "uses": ["GERD", "peptic ulcer", "Zollinger-Ellison syndrome", "gastritis"],
     "interactions": [
       { "drug": "Clopidogrel", "severity": "medium", "effect": "reduced antiplatelet activity" }
     ],
@@ -260,7 +277,7 @@
     "id": "DR024",
     "name": "Salbutamol",
     "class": "Beta-2 Agonist",
-    "uses": ["asthma", "COPD"],
+    "uses": ["asthma", "COPD", "exercise-induced asthma"],
     "interactions": [
       { "drug": "Beta blockers", "severity": "medium", "effect": "reduced bronchodilation" }
     ],
@@ -271,7 +288,7 @@
     "id": "DR025",
     "name": "Prednisolone",
     "class": "Corticosteroid",
-    "uses": ["asthma", "autoimmune disorders"],
+    "uses": ["asthma", "autoimmune disorders", "allergic reactions", "rheumatoid arthritis", "inflammatory bowel disease"],
     "interactions": [
       { "drug": "NSAIDs", "severity": "medium", "effect": "GI bleeding risk" }
     ],
@@ -282,9 +299,10 @@
     "id": "DR026",
     "name": "Escitalopram",
     "class": "SSRI",
-    "uses": ["depression", "generalized anxiety disorder"],
+    "uses": ["depression", "generalized anxiety disorder", "panic disorder", "obsessive-compulsive disorder", "social anxiety disorder"],
     "interactions": [
-      { "drug": "MAOI", "severity": "high", "effect": "serotonin syndrome" }
+      { "drug": "MAOI", "severity": "high", "effect": "serotonin syndrome" },
+      { "drug": "NSAIDs", "severity": "medium", "effect": "bleeding risk" }
     ],
     "contraindications": ["concurrent MAOI use"],
     "dosage_range": { "min": 10, "max": 20, "unit": "mg/day" }
@@ -293,7 +311,7 @@
     "id": "DR027",
     "name": "Citalopram",
     "class": "SSRI",
-    "uses": ["depression"],
+    "uses": ["depression", "anxiety", "panic disorder"],
     "interactions": [
       { "drug": "QT prolonging drugs", "severity": "high", "effect": "arrhythmia risk" }
     ],
@@ -304,7 +322,7 @@
     "id": "DR028",
     "name": "Mirtazapine",
     "class": "Atypical Antidepressant",
-    "uses": ["depression", "insomnia"],
+    "uses": ["depression", "insomnia", "anxiety", "appetite stimulation", "major depressive disorder"],
     "interactions": [
       { "drug": "Alcohol", "severity": "medium", "effect": "increased sedation" }
     ],
@@ -315,7 +333,7 @@
     "id": "DR029",
     "name": "Duloxetine",
     "class": "SNRI",
-    "uses": ["depression", "neuropathic pain"],
+    "uses": ["depression", "neuropathic pain", "generalized anxiety disorder", "fibromyalgia", "chronic musculoskeletal pain"],
     "interactions": [
       { "drug": "Tramadol", "severity": "medium", "effect": "serotonin syndrome" }
     ],
@@ -326,7 +344,7 @@
     "id": "DR030",
     "name": "Tramadol",
     "class": "Opioid Analgesic",
-    "uses": ["moderate pain"],
+    "uses": ["moderate pain", "chronic pain", "postoperative pain", "neuropathic pain"],
     "interactions": [
       { "drug": "SSRIs", "severity": "medium", "effect": "seizure risk" }
     ],
@@ -338,7 +356,7 @@
     "id": "DR031",
     "name": "Morphine",
     "class": "Opioid Analgesic",
-    "uses": ["severe pain"],
+    "uses": ["severe pain", "cancer pain", "postoperative pain", "acute myocardial infarction pain"],
     "interactions": [
       { "drug": "Benzodiazepines", "severity": "high", "effect": "respiratory depression" }
     ],
@@ -349,7 +367,7 @@
     "id": "DR032",
     "name": "Diazepam",
     "class": "Benzodiazepine",
-    "uses": ["anxiety", "muscle spasm"],
+    "uses": ["anxiety", "muscle spasm", "seizures", "alcohol withdrawal", "status epilepticus"],
     "interactions": [
       { "drug": "Opioids", "severity": "high", "effect": "respiratory depression" }
     ],
@@ -360,7 +378,7 @@
     "id": "DR033",
     "name": "Lorazepam",
     "class": "Benzodiazepine",
-    "uses": ["anxiety", "acute agitation"],
+    "uses": ["anxiety", "acute agitation", "status epilepticus", "insomnia", "preoperative sedation"],
     "interactions": [
       { "drug": "Alcohol", "severity": "high", "effect": "CNS depression" }
     ],
@@ -371,7 +389,7 @@
     "id": "DR034",
     "name": "Metoprolol",
     "class": "Beta Blocker",
-    "uses": ["hypertension", "heart failure"],
+    "uses": ["hypertension", "heart failure", "angina", "myocardial infarction", "arrhythmias"],
     "interactions": [
       { "drug": "Calcium channel blockers", "severity": "medium", "effect": "bradycardia" }
     ],
@@ -382,7 +400,7 @@
     "id": "DR035",
     "name": "Propranolol",
     "class": "Beta Blocker",
-    "uses": ["hypertension", "tremor"],
+    "uses": ["hypertension", "tremor", "migraine prophylaxis", "anxiety", "thyrotoxicosis"],
     "interactions": [
       { "drug": "Salbutamol", "severity": "medium", "effect": "reduced bronchodilation" }
     ],
@@ -394,7 +412,7 @@
     "id": "DR036",
     "name": "Hydrochlorothiazide",
     "class": "Thiazide Diuretic",
-    "uses": ["hypertension"],
+    "uses": ["hypertension", "edema", "kidney stones", "osteoporosis"],
     "interactions": [
       { "drug": "Lithium", "severity": "high", "effect": "lithium toxicity" }
     ],
@@ -405,7 +423,7 @@
     "id": "DR037",
     "name": "Furosemide",
     "class": "Loop Diuretic",
-    "uses": ["heart failure", "edema"],
+    "uses": ["heart failure", "edema", "pulmonary edema", "hypertension", "hypercalcemia"],
     "interactions": [
       { "drug": "Aminoglycosides", "severity": "high", "effect": "ototoxicity" }
     ],
@@ -416,7 +434,7 @@
     "id": "DR038",
     "name": "Spironolactone",
     "class": "Potassium-sparing Diuretic",
-    "uses": ["heart failure", "hyperaldosteronism"],
+    "uses": ["heart failure", "hyperaldosteronism", "hypertension", "acne", "polycystic ovary syndrome", "hirsutism"],
     "interactions": [
       { "drug": "ACE inhibitors", "severity": "high", "effect": "hyperkalemia" }
     ],
@@ -427,7 +445,7 @@
     "id": "DR039",
     "name": "Levothyroxine",
     "class": "Thyroid Hormone",
-    "uses": ["hypothyroidism"],
+    "uses": ["hypothyroidism", "thyroid hormone replacement", "myxedema coma", "goiter"],
     "interactions": [
       { "drug": "Calcium supplements", "severity": "low", "effect": "reduced absorption" }
     ],
@@ -438,7 +456,7 @@
     "id": "DR040",
     "name": "Methimazole",
     "class": "Antithyroid Agent",
-    "uses": ["hyperthyroidism"],
+    "uses": ["hyperthyroidism", "Graves disease", "thyrotoxicosis", "preoperative management of hyperthyroidism"],
     "interactions": [
       { "drug": "Warfarin", "severity": "medium", "effect": "altered anticoagulation" }
     ],
@@ -450,7 +468,7 @@
     "id": "DR041",
     "name": "Ranitidine",
     "class": "H2 Blocker",
-    "uses": ["GERD", "peptic ulcer"],
+    "uses": ["GERD", "peptic ulcer", "acid reflux", "stress ulcer prophylaxis"],
     "interactions": [
       { "drug": "Warfarin", "severity": "low", "effect": "increased INR" }
     ],
@@ -461,7 +479,7 @@
     "id": "DR042",
     "name": "Ondansetron",
     "class": "Antiemetic",
-    "uses": ["nausea", "vomiting"],
+    "uses": ["nausea", "vomiting", "chemotherapy-induced nausea", "postoperative nausea", "radiation-induced nausea"],
     "interactions": [
       { "drug": "SSRIs", "severity": "medium", "effect": "serotonin syndrome" }
     ],
@@ -472,7 +490,14 @@
     "id": "DR043",
     "name": "Metronidazole",
     "class": "Nitroimidazole Antibiotic",
-    "uses": ["anaerobic infections"],
+    "uses": [   "anaerobic infection",
+                "intra-abdominal infection",
+                "cholecystitis",
+                "biliary infection",
+                "abscess",
+                "bacterial infection",
+                "clostridium difficile infection"
+              ],
     "interactions": [
       { "drug": "Alcohol", "severity": "high", "effect": "disulfiram-like reaction" }
     ],
@@ -483,7 +508,7 @@
     "id": "DR044",
     "name": "Clarithromycin",
     "class": "Macrolide Antibiotic",
-    "uses": ["respiratory infections"],
+    "uses": ["respiratory infections", "Helicobacter pylori infection", "skin infections", "mycobacterial infections"],
     "interactions": [
       { "drug": "Statins", "severity": "high", "effect": "myopathy risk" }
     ],
@@ -494,7 +519,7 @@
     "id": "DR045",
     "name": "Vancomycin",
     "class": "Glycopeptide Antibiotic",
-    "uses": ["severe gram-positive infections"],
+    "uses": ["severe gram-positive infections", "MRSA infections", "Clostridium difficile infection", "endocarditis"],
     "interactions": [
       { "drug": "Aminoglycosides", "severity": "high", "effect": "nephrotoxicity" }
     ],
@@ -506,7 +531,7 @@
     "id": "DR046",
     "name": "Rifampicin",
     "class": "Antitubercular Antibiotic",
-    "uses": ["tuberculosis"],
+    "uses": ["tuberculosis", "leprosy", "meningococcal prophylaxis", "latent tuberculosis"],
     "interactions": [
       { "drug": "Oral contraceptives", "severity": "high", "effect": "reduced efficacy" }
     ],
@@ -517,8 +542,8 @@
     "id": "DR047",
     "name": "Ethambutol",
     "class": "Antitubercular Antibiotic",
-    "uses": ["tuberculosis"],
-    "interactions": [],
+    "uses": ["tuberculosis", "mycobacterial infections"],
+    "interactions": [{ "drug": "Antacids", "severity": "low", "effect": "reduced absorption" }],
     "contraindications": ["optic neuritis"],
     "dosage_range": { "min": 800, "max": 1600, "unit": "mg/day" }
   },
@@ -526,7 +551,7 @@
     "id": "DR048",
     "name": "Allopurinol",
     "class": "Xanthine Oxidase Inhibitor",
-    "uses": ["gout"],
+    "uses": ["gout", "hyperuricemia", "tumor lysis syndrome", "kidney stones"],
     "interactions": [
       { "drug": "Azathioprine", "severity": "high", "effect": "bone marrow suppression" }
     ],
@@ -537,7 +562,7 @@
     "id": "DR049",
     "name": "Colchicine",
     "class": "Anti-inflammatory",
-    "uses": ["acute gout"],
+    "uses": ["acute gout", "gout prophylaxis", "familial Mediterranean fever", "pericarditis"],
     "interactions": [
       { "drug": "Macrolide antibiotics", "severity": "high", "effect": "toxicity risk" }
     ],
@@ -548,7 +573,7 @@
     "id": "DR050",
     "name": "Hydroxychloroquine",
     "class": "Antimalarial / Immunomodulator",
-    "uses": ["lupus", "rheumatoid arthritis"],
+    "uses": ["lupus", "rheumatoid arthritis", "malaria", "malaria prophylaxis"],
     "interactions": [
       { "drug": "QT prolonging drugs", "severity": "high", "effect": "arrhythmia risk" }
     ],

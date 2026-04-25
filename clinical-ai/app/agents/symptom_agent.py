@@ -1,7 +1,5 @@
 from app.rag.retriever import retrieve
-
 class SymptomAgent:
-
     def run(self, patient):
         query = " ".join(patient.symptoms)
         retrieved = retrieve(query, k=10)
@@ -36,12 +34,18 @@ class SymptomAgent:
         
         # base score
         score = (0.7 * symptom_score) + (0.3 * lab_score)
+        # Base symptom-driven score (dominant)
+        score = 0.8 * symptom_score
+
+        # Allow lab score only if symptom match is reasonably strong
+        if symptom_score >= 0.6:
+            score += 0.2 * lab_score
 
         # 🔥 boost logic
         if infection_signal and infection_match:
             score += 0.15
         elif infection_signal:
-            score-=0-1
+            score-=0.1
 
         # 🔥 penalize mismatch
         if infection_signal and not infection_match:

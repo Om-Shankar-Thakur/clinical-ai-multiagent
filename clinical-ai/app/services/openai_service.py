@@ -15,11 +15,11 @@ class OpenAIService:
        response = self.client.chat.completions.create(
            model=self.deployment,
            messages=[
-               {"role": "system", "content": "You are a clinical reasoning engine."},
+               {"role": "system", "content": "You are a strict clinical reasoning engine. Always return valid JSON. Never hallucinate."},
                {"role": "user", "content": prompt}
            ],
            temperature=0.2,
-           max_tokens=300,
+           max_tokens=500,
            response_format={"type": "json_object"}
        )
        return response.choices[0].message.content.strip()
