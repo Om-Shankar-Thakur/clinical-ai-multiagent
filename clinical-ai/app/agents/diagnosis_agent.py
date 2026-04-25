@@ -38,10 +38,13 @@ class DiagnosisAgent:
             uncertainty = True
 
         # Step 3: compute FINAL confidence (no in-place mutation)
-        final_confidence = (
-            round(chosen["confidence"] * 0.5, 2)
-            if uncertainty
-            else chosen["confidence"]
+        final_confidence = min(
+            1.0,
+            round(
+                chosen["confidence"] * 0.7 +
+                lab_result["risk_score"] * 0.3,
+                2
+            )
         )
 
         final = {
@@ -98,6 +101,7 @@ class DiagnosisAgent:
         # Step 1: Better semantic query
         query = f"""
             Disease: {top['name']}
+            Symptoms: {', '.join(top['matched_symptoms'])}
             Symptoms: {', '.join(top['matched_symptoms'])}
             Lab alerts: {', '.join(lab_result.get('alerts', []))}
         """
