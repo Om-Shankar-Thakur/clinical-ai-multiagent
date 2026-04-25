@@ -22,3 +22,13 @@ def validate_llm_output(text):
    except Exception:
        return False, "Invalid JSON format"
 
+def apply_guardrails(output):
+   disclaimer = (
+       "⚠️ This is a clinical decision support system. "
+       "All recommendations must be reviewed by a licensed clinician."
+   )
+   output["disclaimer"] = disclaimer
+   # Hard safety: no drugs
+   if not output["treatment"]["treatment_plan"]:
+       output["critical_alert"] = "No safe treatment available"
+   return output
