@@ -16,3 +16,10 @@ LACTATE_CRITICAL = 4
 
 # Output constraints
 MAX_CONTEXT_CHARS = 300
+
+SEVERITY_RANK = {
+    "low": 1,
+    "moderate": 2,
+    "high": 3,
+    "critical": 4
+}

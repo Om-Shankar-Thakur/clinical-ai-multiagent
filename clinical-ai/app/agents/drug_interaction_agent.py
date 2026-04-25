@@ -1,4 +1,4 @@
-from app.config.settings import CRITICAL_INTERACTION
+from app.config.settings import CRITICAL_INTERACTION, SEVERITY_RANK
 
 class DrugInteractionAgent:
    
@@ -6,6 +6,9 @@ class DrugInteractionAgent:
         safe_meds = []
         blocked = []
         warnings = []
+        interaction_details=[]
+
+        
 
         current_meds = [m.lower() for m in patient.medications]
         allergies = [a.lower() for a in patient.allergies]
@@ -16,15 +19,29 @@ class DrugInteractionAgent:
             is_blocked = False
             # 1. Allergy
             if name in allergies:
-                blocked.append(f"{drug['name']} blocked (allergy)")
+                interaction_details.append({
+                    "drug": drug["name"],
+                    "type": "allergy",
+                    "severity": "critical",
+                    "reason": "Patient allergic to this drug"
+                })
+                blocked.append(drug['name'])
                 continue
             # 2. Interaction
             for inter in drug.get("interactions", []):
                 interacting_drug = inter.get("drug", "").lower()
                 severity = inter.get("severity", "").lower()
+
                 if interacting_drug in current_meds:
-                    warnings.append(f"{drug['name']} + {inter['drug']} → {inter['effect']}")
-                    if severity in CRITICAL_INTERACTION:
+                    interaction_details.append({
+                        "drug": drug["name"],
+                        "interacts_with": inter["drug"],
+                        "severity": severity,
+                        "effect": inter.get("effect",""),
+                        "type": "drug_interaction"
+                    })
+                    
+                    if SEVERITY_RANK.get(severity, 0) >= 3:
                         blocked.append(f"{drug['name']} blocked (severe interaction)")
                         is_blocked = True
                         break
@@ -33,7 +50,15 @@ class DrugInteractionAgent:
             # 3. Contraindication
             for contra in drug.get("contraindications", []):
                 if contra.lower() in history:
-                    blocked.append(f"{drug['name']} blocked (contraindicated for {contra})")
+
+                    interaction_details.append({
+                        "drug": drug["name"],
+                        "type": "contraindications",
+                        "condition": contra,
+                        "severity": "high",
+                        "reason": f"contradicated for {contra}"
+                    })
+                    blocked.append(drug["name"])
                     is_blocked = True
                     break
             if is_blocked:
@@ -44,5 +69,6 @@ class DrugInteractionAgent:
         return {
             "safe_medications": safe_meds,
             "blocked": blocked,
-            "warnings": list(set(drugs_output["warnings"]))
+            "warnings": warnings,
+            "interaction_details": interaction_details
         }
