@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local vector index
+vector_store.index
+vector_store.meta
+
+
+# Local models (Option A)
+models/all-MiniLM-L6-v2/
+
+# Environment variables
+.env
