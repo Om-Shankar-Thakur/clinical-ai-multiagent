@@ -1,4 +1,5 @@
 import json
+from config.lab_rules import LAB_RULES
 
 class LabInterpreterAgent:
    def __init__(self, data_path="data/diseases.json"):
@@ -9,17 +10,23 @@ class LabInterpreterAgent:
 
     hypotheses = []
     signals = []
+    critical_flags =[]
 
     lab_results = {k.lower().strip(): v for k, v in lab_results.items()}
 
-    if "platelets" in lab_results and lab_results["platelets"] < 100000:
-        signals.append("low platelets")
-    if "hematocrit" in lab_results and lab_results["hematocrit"] > 50:
-        signals.append("elevated hematocrit")
-    if "sodium" in lab_results and lab_results["sodium"] > 145:
-        signals.append("high sodium")
-
-    critical_flags = self._detect_critical_values(lab_results)
+    for key, value in lab_results.items():
+        if key not in LAB_RULES:
+            continue
+        rules = LAB_RULES[key]
+        for rule_type, rule in rules.items():
+            if rule_type == "low" and value < rule["threshold"]:
+                signals.append(rule["signal"])
+                if rule["critical"]:
+                    critical_flags.append(rule["signal"])
+            elif rule_type == "high" and value > rule["threshold"]:
+                signals.append(rule["signal"])
+                if rule["critical"]:
+                    critical_flags.append(rule["signal"])
 
     for d in self.disease_db:
         lab_patterns = d.get("lab_patterns", [])
@@ -79,17 +86,6 @@ class LabInterpreterAgent:
            return "weak"
        else:
            return "refutes"
-       
-   def _detect_critical_values(self, labs):
-       critical = []
-       # simple hardcoded rules (extend later)
-       if labs.get("platelets", 150000) < 100000:
-           critical.append("Low platelets (possible dengue/sepsis)")
-       if labs.get("sodium", 140) > 150:
-           critical.append("Hypernatremia")
-       if labs.get("hemoglobin", 13) < 8:
-           critical.append("Severe anemia")
-       return critical
    
    def _normal_upper(self, key):
        return {
