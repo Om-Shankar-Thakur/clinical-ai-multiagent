@@ -18,11 +18,13 @@ class LabInterpreterAgent:
         if key not in LAB_RULES:
             continue
         rules = LAB_RULES[key]
+
         for rule_type, rule in rules.items():
             if rule_type == "low" and value < rule["threshold"]:
                 signals.append(rule["signal"])
                 if rule["critical"]:
                     critical_flags.append(rule["signal"])
+
             elif rule_type == "high" and value > rule["threshold"]:
                 signals.append(rule["signal"])
                 if rule["critical"]:
@@ -32,9 +34,12 @@ class LabInterpreterAgent:
         lab_patterns = d.get("lab_patterns", [])
         if not lab_patterns:
             continue
+
         score, matched = self._match_lab_patterns(lab_results, lab_patterns)
+
         if score == 0:
             continue
+        
         interpretation = self._interpret_support(score)
         hypotheses.append({
             "disease": d["name"],
@@ -59,6 +64,7 @@ class LabInterpreterAgent:
            if d["name"].lower() == disease_name.lower():
                return d
        return None
+   
    def _match_lab_patterns(self, lab_results, patterns):
         matched = []
         
