@@ -6,5 +6,6 @@ faiss-cpu
 numpy
 pydantic
 sentence-transformers
-openai
 PyPDF2
+streamlit
+requests
