@@ -7,3 +7,4 @@ numpy
 pydantic
 sentence-transformers
 openai
+PyPDF2
