@@ -21,3 +21,13 @@ models/all-MiniLM-L6-v2/
 
 # Environment variables
 .env
+
+
+# Generated guideline data
+data/guidelines/
+data/processed/
+
+
+# Guideline FAISS index
+guideline_store.index
+guideline_store.meta
