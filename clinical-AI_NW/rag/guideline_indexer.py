@@ -36,7 +36,14 @@ class GuidelineIndexer:
                 for line in f:
                     record = json.loads(line)
                     texts.append(record["content"])
-                    metadata.append(record["metadata"])
+                    # Store the chunk text alongside its metadata under "text" -
+                    # SemanticRetriever.retrieve_guidelines() returns this dict
+                    # verbatim, and TreatmentPlannerAgent reads g["text"] to
+                    # build the guideline context passed to the LLM. Previously
+                    # only record["metadata"] was stored (no "text" key), so
+                    # retrieved guideline excerpts were always empty and the
+                    # treatment planner ran fully ungrounded.
+                    metadata.append({**record["metadata"], "text": record["content"]})
 
         if not texts:
             raise RuntimeError("No guideline chunks loaded")
