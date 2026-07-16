@@ -1,93 +1,7 @@
-# from agents.symptom_analyzer import SymptomAnalyzerAgent
-# from agents.lab_interpreter_agent import LabInterpreterAgent
-# from pprint import pprint
-
-# def run_test_case(case_id, chief_complaint, symptoms, lab_results):
-#    print(f"\n{'='*60}")
-#    print(f"TEST CASE {case_id}")
-#    print(f"Chief Complaint: {chief_complaint}")
-#    print(f"Symptoms: {symptoms}")
-#    print(f"Lab Results: {lab_results}")
-#    print(f"{'='*60}")
-#    # Initialize agents
-#    symptom_agent = SymptomAnalyzerAgent()
-#    lab_agent = LabInterpreterAgent()
-#    # -------------------------------
-#    # Parallel execution (logical)
-#    # -------------------------------
-#    symptom_output = symptom_agent.analyze(
-#        chief_complaint=chief_complaint,
-#        symptoms=symptoms
-#    )
-#    lab_output = lab_agent.analyze(
-#        lab_results=lab_results
-#    )
-#    # -------------------------------
-#    # Display outputs separately
-#    # -------------------------------
-#    print("\n--- Symptom Agent Output ---\n")
-#    pprint(symptom_output)
-#    print("\n--- Lab Agent Output ---\n")
-#    pprint(lab_output)
-
-# if __name__ == "__main__":
-#    # -------------------------------
-#    # TEST CASE 1 (GI case)
-#    # -------------------------------
-#    run_test_case(
-#        case_id=1,
-#        chief_complaint="Stomach pain",
-#        symptoms=["stomach pain", "fever", "vomiting"],
-#        lab_results={
-#            "hematocrit": 52,
-#            "sodium": 150,
-#            "platelets": 180000
-#        }
-#    )
-#    # -------------------------------
-#    # TEST CASE 2 (Infection case)
-#    # -------------------------------
-#    run_test_case(
-#        case_id=2,
-#        chief_complaint="High fever",
-#        symptoms=["fever", "body pain", "chills"],
-#        lab_results={
-#            "platelets": 80000,   # dengue signal
-#            "hematocrit": 48,
-#            "sodium": 138
-#        }
-#    )
-#    # -------------------------------
-#    # TEST CASE 3 (General weakness)
-#    # -------------------------------
-#    run_test_case(
-#        case_id=3,
-#        chief_complaint="Weakness and headache",
-#        symptoms=["fever", "weakness", "headache"],
-#        lab_results={
-#            "hemoglobin": 9,
-#            "platelets": 140000,
-#            "sodium": 142
-#        }
-#    )
-# ---------------------------------------------
-
-# from pypdf import PdfReader
-
-# reader = PdfReader("data/guidelines/tuberculosis_guidelines.pdf")
-# text = ""
-# for page in reader.pages:
-#     extracted = page.extract_text()
-#     if extracted:  # safety check
-#         text += extracted
-
-# with open("tuberculosis_guidelines.txt", "w", encoding="utf-8") as f:
-#     f.write(text)
-
-# --------------------------------------
-
-# test_drug_interaction_checker.py
 # test.py
+# Manual smoke test for the Drug Interaction Checker agent (needs GEMINI_API_KEY).
+# Run: python test.py
+
 from agents.drug_interaction_checker_agent import DrugInteractionCheckerAgent
 
 
@@ -95,18 +9,14 @@ def test_drug_interaction_checker_llm():
     agent = DrugInteractionCheckerAgent()
 
     diagnosis = "Dengue"
-
-    current_medications = [
-        "Ibuprofen"
-    ]
-
+    current_medications = ["Ibuprofen"]
     proposed_plan = {
         "management_options": [
             {
                 "option": "The clinician may consider supportive care and pain control if required.",
                 "typical_dosing_range": None,
                 "monitoring": "Monitor platelet count and hematocrit.",
-                "follow_up": "Reassess clinically."
+                "follow_up": "Reassess clinically.",
             }
         ]
     }
@@ -114,7 +24,7 @@ def test_drug_interaction_checker_llm():
     result = agent.check(
         diagnosis=diagnosis,
         current_medications=current_medications,
-        proposed_plan=proposed_plan
+        proposed_plan=proposed_plan,
     )
 
     print("\n=== DRUG INTERACTION CHECK (LLM) RESULT ===\n")

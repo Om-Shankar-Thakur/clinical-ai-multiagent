@@ -1,4 +1,9 @@
+import logging
+
 from rag.retriever import SemanticRetriever
+
+logger = logging.getLogger(__name__)
+
 
 class SymptomAnalyzerAgent:
 
@@ -7,8 +12,8 @@ class SymptomAnalyzerAgent:
 
     def analyze(self, chief_complaint, symptoms):
         symptoms = [s.lower().strip() for s in symptoms]
-        print(f"\n[INFO] Chief Complaint: {chief_complaint}")
-        print(f"[INFO] Symptoms: {symptoms}")
+        logger.debug("Chief complaint: %s", chief_complaint)
+        logger.debug("Symptoms: %s", symptoms)
         candidates = self.retriever.retrieve_diseases(symptoms)
         ranked = self.rank_and_reason(candidates, symptoms)
         return {
@@ -23,7 +28,6 @@ class SymptomAnalyzerAgent:
             matched = list(set(input_symptoms).intersection(disease_symptoms))
             missing = list(set(disease_symptoms) - set(input_symptoms))
 
-            # ❌ FILTER — remove weak candidates
             if len(matched) == 0:
                 continue
 
