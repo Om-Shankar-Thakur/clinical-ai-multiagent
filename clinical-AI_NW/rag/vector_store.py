@@ -1,6 +1,15 @@
 import faiss
 import numpy as np
 import pickle
+
+# Process-wide cache keyed by path: SymptomAnalyzerAgent and
+# TreatmentPlannerAgent each build their own SemanticRetriever, which
+# previously re-read and re-unpickled the same index files from disk on every
+# construction. Caching by path means each index is loaded at most once per
+# process. Safe to share: VectorStore is read-only after load() in normal use.
+_STORE_CACHE = {}
+
+
 class VectorStore:
    def __init__(self, dim):
        self.index = faiss.IndexFlatL2(dim)
@@ -17,7 +26,7 @@ class VectorStore:
             if idx < len(self.metadata):
                 results.append({
                     **self.metadata[idx],
-                    "distance": float(distances[0][i]) 
+                    "distance": float(distances[0][i])
                 })
         return results
    def save(self, path="vector_store"):
@@ -26,10 +35,14 @@ class VectorStore:
            pickle.dump(self.metadata, f)
    @classmethod
    def load(cls, path="vector_store"):
+       cached = _STORE_CACHE.get(path)
+       if cached is not None:
+           return cached
        index = faiss.read_index(f"{path}.index")
        with open(f"{path}.meta", "rb") as f:
            metadata = pickle.load(f)
        obj = cls(dim=index.d)
        obj.index = index
        obj.metadata = metadata
+       _STORE_CACHE[path] = obj
        return obj
