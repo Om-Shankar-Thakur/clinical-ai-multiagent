@@ -6,28 +6,21 @@ __pycache__/
 
 # Virtual environment
 venv/
+.venv/
 
 # OS files
 .DS_Store
 Thumbs.db
 
-# Local vector index
-vector_store.index
-vector_store.meta
-
-
-# Local models (Option A)
-models/all-MiniLM-L6-v2/
-
-# Environment variables
+# Environment variables (never commit real credentials)
 .env
 
+# Local embedding model (~88 MB): auto-downloaded from Hugging Face on first
+# run when this directory is absent, so it does not need to be committed.
+models/all-MiniLM-L6-v2/
 
-# Generated guideline data
-data/guidelines/
-data/processed/
-
-
-# Guideline FAISS index
-guideline_store.index
-guideline_store.meta
+# NOTE: the small pre-built FAISS indices (vector_store.*, guideline_store.*)
+# and the source/processed guideline data (data/guidelines/, data/processed/)
+# ARE committed so the project is runnable immediately after cloning with only
+# a .env file. Rebuild them with `python rag/ingest.py` and
+# `python rag/guideline_indexer.py` if the underlying data changes.

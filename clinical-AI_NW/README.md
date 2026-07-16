@@ -369,19 +369,33 @@ clinical-AI_NW/
 
 ## Setup
 
+> **Runnable after cloning with only a `.env` file.** The small FAISS indices
+> and the guideline source data are committed, and the embedding model
+> auto-downloads on first run — so no manual index build or model download is
+> required. All configuration is via environment variables; there are no
+> absolute paths or machine-specific settings in the code.
+
+### Prerequisites
+
+- **Python 3.10 – 3.12** recommended. (Some dependencies — `faiss-cpu`, the
+  `torch` backend of `sentence-transformers` — may not yet publish wheels for
+  the very newest Python releases.)
+- `git`
+- A **Google Gemini API key** (from Google AI Studio).
+
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Om-Shankar-Thakur/clinical-ai-multiagent.git
+git clone <your-repo-url>
 cd clinical-AI_NW
 ```
 
-### 2. Create a virtual environment
+### 2. Create and activate a virtual environment
 
 ```bash
 python -m venv venv
-venv\Scripts\activate        # Windows
-# source venv/bin/activate   # macOS / Linux
+venv\Scripts\activate          # Windows (PowerShell/cmd)
+# source venv/bin/activate     # macOS / Linux
 ```
 
 ### 3. Install dependencies
@@ -390,39 +404,37 @@ venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 ```
 
-### 4. Configure environment variables
+### 4. Create the `.env` file (the only required configuration)
 
-Create a `.env` file in the project root:
+Create a file named `.env` in the `clinical-AI_NW/` directory:
 
 ```env
-GEMINI_API_KEY=your-api-key
+GEMINI_API_KEY=your-gemini-api-key
 GEMINI_MODEL=gemini-2.0-flash
 ```
 
-> The `.env` file is git-ignored, so credentials never leave your machine.
-> Configuration is environment-variable only — there are no absolute paths or
-> machine-specific settings in the code, so the project is runnable after a
-> fresh clone.
+| Variable | Required | Description |
+|---|---|---|
+| `GEMINI_API_KEY` | yes | Your Google Gemini API key. |
+| `GEMINI_MODEL` | yes | Gemini model id your key can access, e.g. `gemini-2.0-flash`. |
 
-### 5. Provide the local embedding model
+> `.env` is git-ignored, so credentials never get committed.
 
-The Sentence-BERT model (`models/all-MiniLM-L6-v2/`) is git-ignored to keep the
-repo light. Download it once (either via `git lfs`/your model source, or):
+### 5. (Optional) Rebuild the vector indices
 
-```bash
-python -c "from sentence_transformers import SentenceTransformer as S; S('sentence-transformers/all-MiniLM-L6-v2').save('models/all-MiniLM-L6-v2')"
-```
-
-### 6. Build the vector indices (first time only)
+The indices are already committed, so this is only needed if you change
+`data/diseases.json` or the guideline data:
 
 ```bash
-python rag/ingest.py             # builds vector_store.index (diseases)
-python rag/guideline_indexer.py  # builds guideline_store.index (guidelines)
+python rag/ingest.py             # rebuilds vector_store.index (diseases)
+python rag/guideline_indexer.py  # rebuilds guideline_store.index (guidelines)
 ```
 
 ---
 
 ## Running the Application
+
+Run both commands from the `clinical-AI_NW/` project root (paths are relative to it).
 
 ### Start the FastAPI backend
 
@@ -430,13 +442,15 @@ python rag/guideline_indexer.py  # builds guideline_store.index (guidelines)
 uvicorn server:app --reload --port 8000
 ```
 
-### Start the Streamlit frontend (in a separate terminal)
+### Start the Streamlit frontend (in a separate terminal, same venv)
 
 ```bash
 streamlit run streamlit_app.py
 ```
 
-The UI will open at `http://localhost:8501`. The backend API is available at `http://localhost:8000/docs`.
+The UI opens at `http://localhost:8501`; the API docs are at `http://localhost:8000/docs`.
+On first launch the embedding model (~88 MB) downloads automatically if it is not
+already vendored in `models/`.
 
 ---
 
