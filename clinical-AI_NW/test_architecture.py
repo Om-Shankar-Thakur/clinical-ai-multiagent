@@ -26,6 +26,7 @@ from execution.clinical_executor import ClinicalExecutor
 from execution.plan_normalizer import PlanNormalizer
 from planning.clinical_planner import ClinicalPlanner
 from agents.diagnosis_arbiter_agent import DiagnosisArbiterAgent
+from agents.lab_interpreter_agent import LabInterpreterAgent
 from agents.supervisor_agent import SupervisorAgent
 from agents.adapters import DiagnosisArbiterAdapter
 from agents.supervisor_agent import SupervisorAdapter
@@ -143,6 +144,38 @@ def test_planner_falls_back_on_bad_json():
     )
     assert plan.source == "fallback"
     assert plan.agents == ["symptom_agent", "treatment_planner"]
+
+
+# --------------------------------------------------------------------------- #
+#  Lab interpreter: critical findings must contribute to lab_score via
+#  synonym-mapped patterns (regression test for the "lab score always 0 for
+#  hypoxemia-related diagnoses" bug: "low oxygen saturation" previously
+#  extracted the key "oxygen saturation", which never matched the actual
+#  lab_results field "oxygen").
+# --------------------------------------------------------------------------- #
+def test_lab_interpreter_matches_critical_oxygen_synonym():
+    agent = LabInterpreterAgent()
+    out = agent.analyze({
+        "platelets": 120000, "hemoglobin": 10, "hematocrit": 40,
+        "sodium": 140, "oxygen": 87, "glucose": 100,
+    })
+    assert "low oxygen saturation" in out["critical_flags"]
+    by_disease = {h["disease"]: h for h in out["lab_hypotheses"]}
+    assert "Community-Acquired Pneumonia" in by_disease
+    assert by_disease["Community-Acquired Pneumonia"]["score"] > 0
+    assert "low oxygen saturation" in by_disease["Community-Acquired Pneumonia"]["matched_lab_patterns"]
+
+
+def test_lab_interpreter_matches_high_direction_not_just_elevated():
+    # Regression test: the original code only recognised "elevated", so
+    # "high glucose" never matched regardless of the glucose value.
+    agent = LabInterpreterAgent()
+    out = agent.analyze({"glucose": 250})
+    by_disease = {h["disease"]: h for h in out["lab_hypotheses"]}
+    matched_any_high_glucose = any(
+        "high glucose" in h["matched_lab_patterns"] for h in out["lab_hypotheses"]
+    )
+    assert matched_any_high_glucose, "high glucose pattern should match when glucose > 200"
 
 
 # --------------------------------------------------------------------------- #

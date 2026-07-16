@@ -1,5 +1,5 @@
 import json
-from config.lab_rules import LAB_RULES
+from config.lab_rules import LAB_RULES, LAB_PATTERN_SYNONYMS
 
 class LabInterpreterAgent:
    def __init__(self, data_path="data/diseases.json"):
@@ -39,7 +39,7 @@ class LabInterpreterAgent:
 
         if score == 0:
             continue
-        
+
         interpretation = self._interpret_support(score)
         hypotheses.append({
             "disease": d["name"],
@@ -55,7 +55,7 @@ class LabInterpreterAgent:
         "critical_flags": critical_flags,
         "lab_signals": signals
     }
- 
+
    # -----------------------------
    # Helpers
    # -----------------------------
@@ -64,25 +64,70 @@ class LabInterpreterAgent:
            if d["name"].lower() == disease_name.lower():
                return d
        return None
-   
-   def _match_lab_patterns(self, lab_results, patterns):
-        matched = []
-        
 
-        for pattern in patterns:
-            pattern = pattern.lower()
-            # simple rule-based matching
-            if "elevated" in pattern:
-                key = pattern.replace("elevated ", "").strip().lower()
-                if key in lab_results and lab_results[key] > self._normal_upper(key):
-                    matched.append(pattern)
-            elif "low" in pattern or "reduced" in pattern:
-                key = pattern.replace("low ", "").replace("reduced ", "").strip().lower()
-                if key in lab_results and lab_results[key] < self._normal_lower(key):
-                    matched.append(pattern)
+   def _match_lab_patterns(self, lab_results, patterns):
+        """
+        Match a disease's free-text lab_patterns against the collected
+        lab_results, using LAB_RULES as the single source of truth for
+        thresholds/direction.
+
+        Two paths, in order:
+        1. LAB_PATTERN_SYNONYMS - explicit mapping for clinical shorthand
+           (e.g. "hypoxemia", "low platelet count") that doesn't literally
+           contain the lab field name. This is checked FIRST so critical
+           findings (e.g. low oxygen saturation) are recognised even when the
+           disease-authored text uses a synonym rather than the exact field
+           name - previously these silently failed to match at all.
+        2. Fallback: derive the field name directly from the pattern text for
+           patterns that already spell out the field name (e.g. "elevated
+           hematocrit" -> "hematocrit"). Handles both "high"/"elevated" and
+           "low"/"reduced" directions (the original code only handled
+           "elevated", so "high glucose" never matched).
+        """
+        matched = []
+
+        for raw_pattern in patterns:
+            pattern = raw_pattern.lower().strip()
+
+            synonym = LAB_PATTERN_SYNONYMS.get(pattern)
+            if synonym:
+                lab_key, direction = synonym
+                if self._rule_fires(lab_results, lab_key, direction):
+                    matched.append(raw_pattern)
+                continue
+
+            if any(w in pattern for w in ("elevated", "high")):
+                key = self._strip_direction_words(pattern, ("elevated ", "high "))
+                if self._rule_fires(lab_results, key, "high"):
+                    matched.append(raw_pattern)
+            elif any(w in pattern for w in ("low", "reduced")):
+                key = self._strip_direction_words(pattern, ("low ", "reduced "))
+                if self._rule_fires(lab_results, key, "low"):
+                    matched.append(raw_pattern)
+
         score = len(matched) / len(patterns) if patterns else 0
         return score, matched
-   
+
+   @staticmethod
+   def _strip_direction_words(pattern, words):
+       for w in words:
+           pattern = pattern.replace(w, "")
+       return pattern.strip()
+
+   @staticmethod
+   def _rule_fires(lab_results, lab_key, direction):
+       """True if lab_results[lab_key] crosses the LAB_RULES threshold for
+       (lab_key, direction). False if the key is unmeasured or unconfigured."""
+       if lab_key not in lab_results or lab_key not in LAB_RULES:
+           return False
+       rule = LAB_RULES[lab_key].get(direction)
+       if not rule:
+           return False
+       value = lab_results[lab_key]
+       if direction == "low":
+           return value < rule["threshold"]
+       return value > rule["threshold"]
+
    def _interpret_support(self, score):
        if score > 0.6:
            return "supports"
@@ -92,16 +137,3 @@ class LabInterpreterAgent:
            return "weak"
        else:
            return "refutes"
-   
-   def _normal_upper(self, key):
-       return {
-           "hematocrit": 50,
-           "sodium": 145,
-           "platelets": 450000
-       }.get(key, 9999)
-   
-   def _normal_lower(self, key):
-       return {
-           "hemoglobin": 12,
-           "platelets": 150000
-       }.get(key, 0)
