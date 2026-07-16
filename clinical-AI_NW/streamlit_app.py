@@ -301,6 +301,95 @@ def render_drug_interactions(report):
         st.success("No drug interaction warnings.")
 
 
+def render_execution_plan(report):
+    """Render the planner's decision: which agents ran, and why."""
+    plan = report.get("execution_plan", {})
+    if not plan:
+        st.caption("No execution plan recorded.")
+        return
+
+    source = plan.get("source", "unknown")
+    if source == "llm":
+        st.success("🤖 **LLM Planner** — Gemini selected this execution plan from the available patient data.")
+    else:
+        st.warning("🛟 **Fallback Planner** — the LLM planner was unavailable or returned an unusable "
+                   "response; a deterministic plan was derived from data availability instead.")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("**Agents selected**")
+        for a in plan.get("agents", []):
+            tag = " *(parallel)*" if a in plan.get("parallel", []) else ""
+            st.markdown(f"- `{a}`{tag}")
+    with col2:
+        st.markdown("**Planner reasoning**")
+        st.caption(plan.get("reasoning") or "No reasoning provided.")
+
+
+def render_execution_timeline(report):
+    """Render a step-by-step timeline of every agent that actually ran."""
+    trace = report.get("execution_trace", {})
+    steps = trace.get("steps", [])
+    if not steps:
+        st.caption("No execution trace recorded.")
+        return
+
+    st.caption(
+        f"Execution ID: `{trace.get('execution_id', 'n/a')}`  ·  "
+        f"Total latency: `{trace.get('total_latency_ms', 0):.0f} ms`"
+    )
+
+    status_icons = {"success": "✅", "error": "❌", "skipped": "⏭️"}
+    for step in steps:
+        icon = status_icons.get(step.get("status"), "⚪")
+        conf = step.get("confidence")
+        conf_str = f"{conf:.2f}" if isinstance(conf, (int, float)) else "n/a"
+        with st.expander(
+            f"{icon} **{step['agent']}** — {step.get('latency_ms', 0):.0f} ms · "
+            f"confidence {conf_str} · {step.get('reason', '')}",
+            expanded=False,
+        ):
+            st.markdown(f"- **Status:** {step.get('status')}")
+            st.markdown(f"- **Start:** {step.get('start_time')}")
+            st.markdown(f"- **End:** {step.get('end_time')}")
+            if step.get("error"):
+                st.error(f"Error: {step['error']}")
+
+
+def render_supervisor_summary(report):
+    """Render the SupervisorAgent's governance verdict on this run."""
+    review = report.get("supervisor_review", {})
+    if not review:
+        st.caption("No supervisor review recorded.")
+        return
+
+    approval = review.get("approval_status", "unknown")
+    approval_style = {
+        "approved": ("✅", "success"),
+        "approved_with_warnings": ("⚠️", "warning"),
+        "rejected": ("🛑", "error"),
+    }
+    icon, style = approval_style.get(approval, ("⚪", "info"))
+
+    col1, col2 = st.columns(2)
+    col1.metric("Approval Status", f"{icon} {approval.replace('_', ' ').title()}")
+    col2.metric("Overall Confidence", f"{review.get('overall_confidence', 0):.1%}")
+
+    getattr(st, style)(review.get("recommendation", ""))
+
+    warnings = review.get("warnings", [])
+    if warnings:
+        st.markdown("**Warnings**")
+        for w in warnings:
+            st.markdown(f"- ⚠️ {w}")
+
+    checks = review.get("checks", {})
+    if checks:
+        with st.expander("Consistency checks"):
+            for name, passed in checks.items():
+                st.markdown(f"- {'✅' if passed else '❌'} {name.replace('_', ' ')}")
+
+
 def render_dissenting_opinions(report):
     """Render disagreements between agents."""
     dissent = report.get("dissenting_opinions", [])
@@ -355,6 +444,10 @@ if analyze_btn:
 if "report" in st.session_state:
     report = st.session_state["report"]
 
+    # --- Planner decision (which agents ran, and why) ---
+    st.header("🧭 Execution Plan")
+    render_execution_plan(report)
+
     # --- Diagnosis ---
     st.header("🩺 Diagnosis")
     render_diagnosis(report)
@@ -382,6 +475,14 @@ if "report" in st.session_state:
     # --- Dissenting Opinions ---
     st.header("🔀 Dissenting Opinions")
     render_dissenting_opinions(report)
+
+    # --- Supervisor governance verdict ---
+    st.header("🛡️ Supervisor Review")
+    render_supervisor_summary(report)
+
+    # --- Execution timeline (Planner -> agents -> supervisor) ---
+    with st.expander("⏱️ Execution Timeline (Planner → Agents → Supervisor)"):
+        render_execution_timeline(report)
 
     # --- Disclaimer ---
     st.divider()
