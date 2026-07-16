@@ -54,11 +54,20 @@ class ClinicalPlanner:
             raw = self.llm.generate(CLINICAL_PLANNER_SYSTEM_PROMPT, user_prompt)
             plan = self._parse_plan(raw)
         except Exception as e:  # noqa: BLE001 - never let planning crash the run
-            logger.error("Planner LLM call failed: %s", e)
+            logger.error("[planner:LLM] Gemini call failed (%s); falling back to deterministic plan.", e)
             plan = None
 
         if plan is None:
             plan = self._fallback_plan(patient_context)
+            logger.warning(
+                "[planner:FALLBACK] using deterministic plan (source=fallback): agents=%s | %s",
+                plan.agents, plan.reasoning,
+            )
+        else:
+            logger.info(
+                "[planner:LLM] Gemini selected plan (source=llm): agents=%s parallel=%s | %s",
+                plan.agents, plan.parallel, plan.reasoning,
+            )
 
         self._record(plan)
         return plan
@@ -98,7 +107,7 @@ class ClinicalPlanner:
         try:
             data = json.loads(cleaned)
         except json.JSONDecodeError:
-            logger.warning("Planner returned non-JSON output; using fallback.")
+            logger.warning("[planner:LLM] Gemini returned non-JSON/unparseable output; using fallback.")
             return None
 
         if not isinstance(data, dict):

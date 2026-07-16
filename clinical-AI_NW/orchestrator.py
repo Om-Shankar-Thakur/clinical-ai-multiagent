@@ -79,9 +79,10 @@ class ClinicalOrchestrator:
         # 2. Plan (LLM decides which agents run) ----------------------------
         planner = ClinicalPlanner(llm=self._planner_llm, memory=memory)
         plan = planner.plan(memory.get_patient_context())
+        source_tag = "LLM PLANNER" if plan.source == "llm" else "FALLBACK PLANNER"
         logger.info(
-            "[orchestrator] execution_id=%s plan(source=%s)=%s",
-            execution_id, plan.source, plan.agents,
+            "[orchestrator] execution_id=%s plan_source=%s(%s) agents=%s",
+            execution_id, source_tag, plan.source, plan.agents,
         )
 
         # 3. Execute --------------------------------------------------------
