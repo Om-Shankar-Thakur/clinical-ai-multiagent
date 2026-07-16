@@ -28,6 +28,7 @@ def build_default_registry() -> AgentRegistry:
         TreatmentPlannerAdapter,
         DrugCheckerAdapter,
     )
+    from agents.supervisor_agent import SupervisorAdapter
 
     registry = AgentRegistry()
     registry.register("symptom_agent", SymptomAgentAdapter)
@@ -35,9 +36,6 @@ def build_default_registry() -> AgentRegistry:
     registry.register("diagnosis_arbiter", DiagnosisArbiterAdapter)
     registry.register("treatment_planner", TreatmentPlannerAdapter)
     registry.register("drug_checker", DrugCheckerAdapter)
-
-    # SupervisorAgent is registered here once Phase 5 lands:
-    # from agents.supervisor_agent import SupervisorAdapter
-    # registry.register("supervisor", SupervisorAdapter)
+    registry.register("supervisor", SupervisorAdapter)
 
     return registry
