@@ -411,23 +411,34 @@ Create a file named `.env` in the `clinical-AI_NW/` directory:
 ```env
 GEMINI_API_KEY=your-gemini-api-key
 GEMINI_MODEL=gemini-2.0-flash
+GEMINI_TIMEOUT_MS=30000
 ```
 
 | Variable | Required | Description |
 |---|---|---|
 | `GEMINI_API_KEY` | yes | Your Google Gemini API key. |
-| `GEMINI_MODEL` | yes | Gemini model id your key can access, e.g. `gemini-2.0-flash`. |
+| `GEMINI_MODEL` | yes | Gemini model id your key can access, e.g. `gemini-2.0-flash`. Experimental/preview models (e.g. `gemini-3.5-flash`) can return `503 UNAVAILABLE` under high demand or take much longer per call — prefer a stable GA model for reliability. |
+| `GEMINI_TIMEOUT_MS` | no (default `30000`) | Per-request timeout in milliseconds for Gemini calls, so a slow/overloaded model fails fast (with a safe fallback response) instead of blocking a request for minutes. |
 
 > `.env` is git-ignored, so credentials never get committed.
 
-### 5. (Optional) Rebuild the vector indices
+### 5. Rebuild the guideline vector index (required once)
 
-The indices are already committed, so this is only needed if you change
-`data/diseases.json` or the guideline data:
+The committed `guideline_store.index`/`.meta` were built before a fix to
+`rag/guideline_indexer.py` that stores each chunk's actual text alongside its
+metadata (previously only metadata was stored, so guideline excerpts retrieved
+by the Treatment Planner were always empty — the RAG step ran "ungrounded").
+Rebuild once after cloning this branch:
+
+```bash
+python rag/guideline_indexer.py  # rebuilds guideline_store.index (guidelines)
+```
+
+`vector_store.index` (diseases) does not need a rebuild unless you change
+`data/diseases.json`:
 
 ```bash
 python rag/ingest.py             # rebuilds vector_store.index (diseases)
-python rag/guideline_indexer.py  # rebuilds guideline_store.index (guidelines)
 ```
 
 ---
@@ -450,7 +461,10 @@ streamlit run streamlit_app.py
 
 The UI opens at `http://localhost:8501`; the API docs are at `http://localhost:8000/docs`.
 On first launch the embedding model (~88 MB) downloads automatically if it is not
-already vendored in `models/`.
+already vendored in `models/`, and is then **saved locally to `models/all-MiniLM-L6-v2/`**
+so subsequent runs (and process restarts) load it from disk instead of the network.
+The model is also cached in memory per process, so the multiple agents that use it
+share one loaded copy instead of each loading their own.
 
 ---
 
@@ -534,6 +548,49 @@ python test_orchestrator.py
 | Hemoglobin | < 10 | Low hemoglobin |
 | Oxygen | < 92 | Low oxygen saturation (critical) |
 | Glucose | > 200 | High blood sugar (critical) |
+
+---
+
+## Troubleshooting & Known Limitations
+
+**Critical lab findings not affecting the diagnosis ranking.** Fixed: disease
+`lab_patterns` written in clinical shorthand (e.g. `"hypoxemia"`, `"low platelet
+count"`, `"high glucose"`) previously failed to match the collected lab fields
+due to a key-extraction mismatch and a missing "high" direction check — so a
+critical finding like low SpO2 never boosted the score of related diagnoses
+(pneumonia, PE). See `config/lab_rules.py` (`LAB_PATTERN_SYNONYMS`) and
+`agents/lab_interpreter_agent.py`.
+
+**Guideline RAG returning empty context.** Fixed in `rag/guideline_indexer.py`
+(the vector store previously discarded chunk text, keeping only metadata) —
+**you must rebuild `guideline_store.index` once** (see Setup step 5) for this
+fix to take effect; the index committed on this branch predates the fix.
+
+**Embedding model re-downloading every run.** Fixed: `rag/embedder.py` now
+saves the model locally after the first hub download and caches the loaded
+model per process, so repeated `SemanticRetriever` construction (one per agent)
+no longer reloads it.
+
+**A single Gemini call taking ~90 seconds.** Experimental/preview models (e.g.
+`gemini-3.5-flash`) can be slow or return `503 UNAVAILABLE` under high demand.
+`GEMINI_TIMEOUT_MS` (default 30s) now bounds worst-case latency — a timed-out
+call is treated as a failure and the affected agent returns its safe fallback
+response rather than blocking the request indefinitely. For consistent
+performance, prefer a stable GA model (e.g. `gemini-2.0-flash`).
+
+**Planner fallback vs LLM plan.** Logs are tagged so you can tell which path
+ran: `[planner:LLM] ... source=llm` vs `[planner:FALLBACK] ... source=fallback`
+(also mirrored in `orchestrator`'s log line and in the UI's Execution Plan
+card — a green "LLM Planner" banner vs an amber "Fallback Planner" banner).
+
+**Remaining known limitations:**
+- `PatientInput` still requires at least one symptom + a chief complaint, so a
+  labs-only request isn't reachable through the current HTTP API (unchanged,
+  for backward compatibility).
+- CORS is open (`allow_origins=["*"]`) with no authentication — fine for local
+  use, not for any exposed deployment.
+- The `.meta` index files are Python pickles (trusted only because they're
+  build artifacts of this repo, not third-party input).
 
 ---
 
