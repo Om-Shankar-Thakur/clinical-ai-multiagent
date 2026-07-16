@@ -34,8 +34,15 @@ class BaseAgent(ABC):
     #: Registry key. Must be overridden by every concrete agent.
     name: str = "base_agent"
 
-    #: Names of agents this agent consumes output from. Overridable.
+    #: Soft ordering hints: names this agent consumes output from. Filtered to
+    #: whatever the plan actually selected, then used to layer execution stages.
     dependencies: list[str] = []
+
+    #: Hard prerequisites: names that MUST be scheduled whenever this agent is.
+    #: The executor performs dependency *closure* over this set (a graph
+    #: operation, not a medical rule) so a selected agent can never run without
+    #: the upstream output it structurally requires. Defaults to empty.
+    requires: list[str] = []
 
     @abstractmethod
     def execute(self, memory) -> AgentResult:

@@ -165,6 +165,7 @@ class DiagnosisArbiterAdapter(BaseAgent):
 class TreatmentPlannerAdapter(BaseAgent):
     name = "treatment_planner"
     dependencies = ["diagnosis_arbiter"]
+    requires = ["diagnosis_arbiter"]  # cannot plan treatment without a diagnosis
 
     def __init__(self) -> None:
         from agents.treatment_planner_agent import TreatmentPlannerAgent
@@ -217,6 +218,7 @@ class TreatmentPlannerAdapter(BaseAgent):
 class DrugCheckerAdapter(BaseAgent):
     name = "drug_checker"
     dependencies = ["treatment_planner"]
+    requires = ["treatment_planner"]  # checks the proposed plan, so needs it first
 
     def __init__(self) -> None:
         from agents.drug_interaction_checker_agent import DrugInteractionCheckerAgent

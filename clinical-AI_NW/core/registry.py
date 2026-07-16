@@ -36,6 +36,23 @@ class AgentRegistry:
     def is_registered(self, name: str) -> bool:
         return name in self._factories
 
+    def get_factory(self, name: str):
+        """
+        Return the registered factory (typically the agent *class*) without
+        instantiating it. Lets callers read class-level metadata
+        (``dependencies``, ``requires``) during planning/normalisation without
+        paying the construction cost of heavy agents.
+        """
+        if name not in self._factories:
+            raise KeyError(f"Agent '{name}' is not registered.")
+        return self._factories[name]
+
+    def dependencies_of(self, name: str) -> list[str]:
+        return list(getattr(self.get_factory(name), "dependencies", []))
+
+    def requires_of(self, name: str) -> list[str]:
+        return list(getattr(self.get_factory(name), "requires", []))
+
     def get(self, name: str) -> BaseAgent:
         """Return the (cached) agent instance for ``name``."""
         if name not in self._factories:
