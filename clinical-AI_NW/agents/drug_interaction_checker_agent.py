@@ -1,5 +1,5 @@
 from config.prompts import DRUG_INTERACTION_CHECKER_SYSTEM_PROMPT
-from llm.azure_client import AzureLLM
+from llm.gemini_client import GeminiLLM
 
 
 class DrugInteractionCheckerAgent:
@@ -9,7 +9,7 @@ class DrugInteractionCheckerAgent:
     """
 
     def __init__(self):
-        self.llm = AzureLLM()
+        self.llm = GeminiLLM()
 
     def check(self, diagnosis, current_medications, proposed_plan):
         user_prompt = {

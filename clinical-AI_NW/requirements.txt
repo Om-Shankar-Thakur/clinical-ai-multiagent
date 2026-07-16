@@ -1,7 +1,7 @@
 fastapi
 uvicorn
 python-dotenv
-openai
+google-genai
 faiss-cpu
 numpy
 pydantic

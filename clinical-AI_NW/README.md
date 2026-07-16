@@ -327,7 +327,7 @@ clinical-AI_NW/
 │   └── prompts.py                   # LLM system prompts
 │
 ├── llm/
-│   └── azure_client.py              # Azure OpenAI wrapper
+│   └── gemini_client.py             # Google Gemini wrapper
 │
 ├── rag/
 │   ├── embedder.py                  # Sentence-transformer encoding
@@ -378,10 +378,8 @@ pip install -r requirements.txt
 Create a `.env` file in the project root:
 
 ```env
-AZURE_OPENAI_API_KEY=your-api-key
-AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
-AZURE_OPENAI_API_VERSION=2024-02-15-preview
-AZURE_OPENAI_DEPLOYMENT=your-deployment-name
+GEMINI_API_KEY=your-api-key
+GEMINI_MODEL=gemini-2.0-flash
 ```
 
 ### 5. Ingest data (first time only)

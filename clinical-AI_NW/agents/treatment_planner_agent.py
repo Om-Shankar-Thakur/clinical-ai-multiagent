@@ -2,7 +2,7 @@
 
 import json
 import logging
-from llm.azure_client import AzureLLM
+from llm.gemini_client import GeminiLLM
 from rag.retriever import SemanticRetriever
 from config.prompts import TREATMENT_PLANNER_SYSTEM_PROMPT
 
@@ -26,7 +26,7 @@ class TreatmentPlannerAgent:
     """
 
     def __init__(self):
-        self.llm = AzureLLM()
+        self.llm = GeminiLLM()
         self.retriever = SemanticRetriever()
 
     def analyze(
@@ -60,7 +60,7 @@ class TreatmentPlannerAgent:
         drug_warnings = (drug_safety_output or {}).get("warnings", [])
 
         # ------------------------------------------------
-        # STEP 1: RULE-BASED CONFIDENCE GATING
+        # STEP 1: CONFIDENCE GATING
         # ------------------------------------------------
         if not diagnosis or confidence < CONFIDENCE_THRESHOLD:
             return self._insufficient_confidence_response(
